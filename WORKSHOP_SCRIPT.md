@@ -1,7 +1,7 @@
 # React Workshop
 ## Introduction
 
-Welcome! This workshop is designed for experienced backend engineers who are new to frontend development, specifically React. Our goal is to quickly get you up to speed with the core concepts of React and familiarize you with the patterns and libraries we use in our own `TES-UI` project.
+Welcome! This workshop is designed for experienced backend engineers who are new to frontend development, specifically React. Our goal is to quickly get you up to speed with the core concepts of React and familiarize you with the patterns and libraries we use in our own projects.
 
 ### What is React?
 
@@ -10,7 +10,7 @@ Welcome! This workshop is designed for experienced backend engineers who are new
 - **Declarative:** You describe *what* you want the UI to look like for a given state, and React takes care of updating the actual DOM efficiently. You don't manually manipulate the DOM (e.g., `document.getElementById(...)`).
 - **"Learn Once, Write Anywhere":** The same concepts apply to web (with React DOM) and mobile (with React Native).
 
-### Our Tech Stack (TES-UI & This Workshop)
+### Our Tech Stack
 
 - **Build Tool:** Vite (a super-fast modern alternative to Create React App/Webpack)
 - **Language:** TypeScript
@@ -271,7 +271,7 @@ export default UserList;
 
 While `useEffect` is great for understanding side effects, for server state (like API data), it can lead to a lot of boilerplate code for handling loading, errors, caching, re-fetching, etc.
 
-In `TES-UI`, we use **React Query**. It's a powerful library that simplifies data fetching, caching, and synchronization. It replaces all the `useState` and `useEffect` logic for server state with a simple hook. We will see an example of this later.
+In our projects, we use **React Query**. It's a powerful library that simplifies data fetching, caching, and synchronization. It replaces all the `useState` and `useEffect` logic for server state with a simple hook. We will see an example of this later.
 
 ---
 
@@ -745,7 +745,7 @@ export default SimpleForm;
 
 ## Conclusion & Next Steps
 
-Congratulations! You've now seen the fundamental building blocks of a modern React application, from core hooks to the specific libraries we use in `TES-UI`.
+Congratulations! You've now seen the fundamental building blocks of a modern React application, from core hooks to the specific libraries we use in our projects.
 
 ### Key Takeaways
 
@@ -758,8 +758,8 @@ Congratulations! You've now seen the fundamental building blocks of a modern Rea
 ### What to Explore Next
 
 - **Performance Hooks:** `useMemo` and `useCallback` to prevent unnecessary re-renders.
-- **Testing:** `TES-UI` uses `vitest` and `react-testing-library`.
+- **Testing:** We use `vitest` and `react-testing-library`.
 - **Advanced React Query:** Mutations (for POST/PUT/DELETE requests), query invalidation, and optimistic updates.
 - **State Management:** For very complex global state, libraries like Zustand or Redux are common, but often `useContext` and `useReducer` (or React Query) are enough.
 
-Feel free to explore the code in this workshop project and compare it to the concepts in the `TES-UI` codebase. Happy coding!
+Feel free to explore the code in this workshop project and compare it to the concepts in our own codebase. Happy coding!
