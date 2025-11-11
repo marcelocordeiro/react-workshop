@@ -6,13 +6,13 @@ This project serves as a hands-on workshop for backend engineers to familiarize 
 
 This workshop project is built with the following tech stack:
 
--   **Build Tool:** Vite
--   **Language:** TypeScript
--   **Package Manager:** Yarn
--   **UI Library:** Material-UI (MUI)
--   **Data Fetching:** React Query + Axios
--   **Forms:** React Hook Form
--   **Routing:** React Router
+- **Build Tool:** Vite
+- **Language:** TypeScript
+- **Package Manager:** Yarn
+- **UI Library:** Material-UI (MUI)
+- **Data Fetching:** React Query + Axios
+- **Forms:** React Hook Form
+- **Routing:** React Router
 
 ## Getting Started
 
@@ -48,9 +48,9 @@ For a detailed explanation of each concept and code example, refer to the `WORKS
 
 The `src` directory contains the main application code:
 
--   `src/components/`: Contains reusable UI components, organized by the React concept they demonstrate.
--   `src/pages/`: Contains the different pages of the application, each showcasing a specific React concept.
--   `src/App.tsx`: Defines the main routing for the application.
--   `src/main.tsx`: The entry point of the React application.
+- `src/components/`: Contains reusable UI components, organized by the React concept they demonstrate.
+- `src/pages/`: Contains the different pages of the application, each showcasing a specific React concept.
+- `src/App.tsx`: Defines the main routing for the application.
+- `src/main.tsx`: The entry point of the React application.
 
 Feel free to explore the code and experiment with the examples!

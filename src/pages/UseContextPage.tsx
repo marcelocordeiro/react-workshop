@@ -1,19 +1,21 @@
-import { Typography, Divider, Box } from '@mui/material';
-import ThemeSwitcher from '../components/05-useContext/ThemeSwitcher';
+import { Outlet } from 'react-router-dom';
+import { Box, Typography, Divider } from '@mui/material';
 
-function UseContextPage() {
+const UseContextPage = () => {
   return (
     <Box>
       <Typography variant="h4" component="h1" gutterBottom>
         5. useContext Hook
       </Typography>
       <Typography paragraph>
-        `useContext` allows you to subscribe to a context and consume its value without prop drilling. Here, we use it to toggle the theme.
+        The `useContext` hook allows you to share state across your component
+        tree without manually passing props down at every level. Below are two
+        examples demonstrating its usage.
       </Typography>
       <Divider sx={{ my: 2 }} />
-      <ThemeSwitcher />
+      <Outlet />
     </Box>
   );
-}
+};
 
 export default UseContextPage;

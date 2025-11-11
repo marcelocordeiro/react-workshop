@@ -1,8 +1,7 @@
-import { Outlet, Link as RouterLink } from 'react-router-dom';
+import { Outlet, Link as RouterLink, useLocation } from 'react-router-dom';
 import {
   AppBar,
   Box,
-  CssBaseline,
   Drawer,
   List,
   ListItem,
@@ -20,16 +19,27 @@ const navItems = [
   { text: '2. Props', path: '/props' },
   { text: '3. useState', path: '/usestate' },
   { text: '4. useEffect', path: '/useeffect' },
-  { text: '5. useContext', path: '/usecontext' },
+  {
+    text: '5. useContext',
+    path: '/usecontext',
+    children: [
+      { text: '5.1 Simple Example', path: '/usecontext/simple-example' },
+      { text: '5.2 Theme Switcher', path: '/usecontext/themeswitcher' },
+    ],
+  },
   { text: '6. useReducer', path: '/usereducer' },
-  { text: '7. React Query', path: '/react-query' },
-  { text: '8. React Hook Form', path: '/react-hook-form' },
+  { text: '7. useMemo', path: '/usememo' },
+  { text: '8. useCallback', path: '/usecallback' },
+  { text: '9. React Query', path: '/react-query' },
+  { text: '10. React Hook Form', path: '/react-hook-form' },
 ];
 
-export default function Layout() {
+export const Layout = () => {
+  const location = useLocation();
+  const currentPath = location.pathname;
+
   return (
     <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
       <AppBar
         position="fixed"
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -45,18 +55,48 @@ export default function Layout() {
         sx={{
           width: drawerWidth,
           flexShrink: 0,
-          [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+          [`& .MuiDrawer-paper`]: {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+          },
         }}
       >
         <Toolbar />
         <Box sx={{ overflow: 'auto' }}>
           <List>
             {navItems.map((item) => (
-              <ListItem key={item.text} disablePadding>
-                <ListItemButton component={RouterLink} to={item.path}>
-                  <ListItemText primary={item.text} />
-                </ListItemButton>
-              </ListItem>
+              <div key={item.text}>
+                <ListItem disablePadding>
+                  <ListItemButton
+                    component={RouterLink}
+                    to={item.path}
+                    selected={
+                      currentPath === item.path ||
+                      (item.children &&
+                        item.children.some((child) =>
+                          currentPath.startsWith(child.path),
+                        ))
+                    }
+                  >
+                    <ListItemText primary={item.text} />
+                  </ListItemButton>
+                </ListItem>
+                {item.children && (
+                  <List component="div" disablePadding sx={{ pl: 4 }}>
+                    {item.children.map((child) => (
+                      <ListItem key={child.text} disablePadding>
+                        <ListItemButton
+                          component={RouterLink}
+                          to={child.path}
+                          selected={currentPath === child.path}
+                        >
+                          <ListItemText primary={child.text} />
+                        </ListItemButton>
+                      </ListItem>
+                    ))}
+                  </List>
+                )}
+              </div>
             ))}
           </List>
         </Box>
@@ -67,4 +107,6 @@ export default function Layout() {
       </Box>
     </Box>
   );
-}
+};
+
+export default Layout;

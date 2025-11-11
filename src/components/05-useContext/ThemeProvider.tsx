@@ -1,6 +1,9 @@
 import { useState, useMemo } from 'react';
 import type { ReactNode } from 'react';
-import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material';
+import {
+  createTheme,
+  ThemeProvider as MuiThemeProvider,
+} from '@mui/material/styles';
 import type { PaletteMode } from '@mui/material';
 import { ThemeContext } from './theme-context'; // Import from the new file
 
@@ -8,7 +11,7 @@ interface ThemeProviderProps {
   children: ReactNode;
 }
 
-export function ThemeProvider({ children }: ThemeProviderProps) {
+export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [mode, setMode] = useState<PaletteMode>('dark');
 
   const theme = useMemo(
@@ -30,4 +33,4 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>
     </ThemeContext.Provider>
   );
-}
+};

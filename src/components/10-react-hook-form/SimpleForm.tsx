@@ -1,6 +1,13 @@
 import { useForm, Controller } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
-import { TextField, Button, Box, Typography, Checkbox, FormControlLabel } from '@mui/material';
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  Checkbox,
+  FormControlLabel,
+} from '@mui/material';
 
 interface IFormInput {
   firstName: string;
@@ -9,7 +16,7 @@ interface IFormInput {
   subscribe: boolean;
 }
 
-function SimpleForm() {
+const SimpleForm = () => {
   const {
     control,
     handleSubmit,
@@ -34,7 +41,7 @@ function SimpleForm() {
       sx={{ display: 'flex', flexDirection: 'column', gap: 2, maxWidth: 400 }}
     >
       <Typography variant="h6">Simple Form</Typography>
-      
+
       <Controller
         name="firstName"
         control={control}
@@ -90,18 +97,18 @@ function SimpleForm() {
         name="subscribe"
         control={control}
         render={({ field }) => (
-            <FormControlLabel
+          <FormControlLabel
             control={<Checkbox {...field} checked={field.value} />}
             label="Subscribe to newsletter"
-            />
+          />
         )}
-        />
+      />
 
       <Button type="submit" variant="contained">
         Submit
       </Button>
     </Box>
   );
-}
+};
 
 export default SimpleForm;

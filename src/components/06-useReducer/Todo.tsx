@@ -9,6 +9,7 @@ import {
   Checkbox,
   Box,
   Typography,
+  FormControlLabel,
 } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 
@@ -32,7 +33,9 @@ const reducer = (state: Todo[], action: Action): Todo[] => {
       ];
     case 'TOGGLE_TODO':
       return state.map((todo) =>
-        todo.id === action.payload ? { ...todo, completed: !todo.completed } : todo
+        todo.id === action.payload
+          ? { ...todo, completed: !todo.completed }
+          : todo,
       );
     case 'REMOVE_TODO':
       return state.filter((todo) => todo.id !== action.payload);
@@ -41,12 +44,11 @@ const reducer = (state: Todo[], action: Action): Todo[] => {
   }
 };
 
-function Todo() {
+const Todo = () => {
   const [todos, dispatch] = useReducer(reducer, []);
   const [text, setText] = useState('');
 
-  const handleAddTodo = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleAddTodo = () => {
     if (text.trim()) {
       dispatch({ type: 'ADD_TODO', payload: text });
       setText('');
@@ -56,7 +58,7 @@ function Todo() {
   return (
     <Box>
       <Typography variant="h6">My Todo List</Typography>
-      <Box component="form" onSubmit={handleAddTodo} sx={{ display: 'flex', gap: 1, mb: 2 }}>
+      <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
         <TextField
           label="New Todo"
           variant="outlined"
@@ -65,7 +67,7 @@ function Todo() {
           onChange={(e) => setText(e.target.value)}
           fullWidth
         />
-        <Button type="submit" variant="contained">
+        <Button variant="contained" onClick={handleAddTodo}>
           Add
         </Button>
       </Box>
@@ -77,25 +79,44 @@ function Todo() {
               <IconButton
                 edge="end"
                 aria-label="delete"
-                onClick={() => dispatch({ type: 'REMOVE_TODO', payload: todo.id })}
+                onClick={() =>
+                  dispatch({ type: 'REMOVE_TODO', payload: todo.id })
+                }
               >
                 <Delete />
               </IconButton>
             }
           >
-            <Checkbox
-              checked={todo.completed}
-              onChange={() => dispatch({ type: 'TOGGLE_TODO', payload: todo.id })}
-            />
-            <ListItemText
-              primary={todo.text}
-              sx={{ textDecoration: todo.completed ? 'line-through' : 'none' }}
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={todo.completed}
+                  onChange={() =>
+                    dispatch({ type: 'TOGGLE_TODO', payload: todo.id })
+                  }
+                />
+              }
+              label={
+                <ListItemText
+                  primary={
+                    <Typography
+                      sx={{
+                        textDecoration: todo.completed
+                          ? 'line-through'
+                          : 'none',
+                      }}
+                    >
+                      {todo.text}
+                    </Typography>
+                  }
+                />
+              }
             />
           </ListItem>
         ))}
       </List>
     </Box>
   );
-}
+};
 
 export default Todo;

@@ -1,17 +1,19 @@
 import { Typography, Divider, Box } from '@mui/material';
 import Greeting from '../components/02-Props/Greeting';
 
-function PropsPage() {
+const PropsPage = () => {
+  const name = 'Marcelo';
   return (
     <Box>
       <Typography variant="h4" component="h1" gutterBottom>
         2. Props
       </Typography>
       <Typography paragraph>
-        Props (short for properties) are how you pass data from a parent component to a child component. They are read-only.
+        Props (short for properties) are how you pass data from a parent
+        component to a child component. <b>They are read-only</b>.
       </Typography>
       <Divider sx={{ my: 2 }} />
-      <Greeting name="Ana">
+      <Greeting name={name}>
         <p>This is a message passed as a child.</p>
       </Greeting>
       <Greeting name="Marcelo">
@@ -19,6 +21,6 @@ function PropsPage() {
       </Greeting>
     </Box>
   );
-}
+};
 
 export default PropsPage;
