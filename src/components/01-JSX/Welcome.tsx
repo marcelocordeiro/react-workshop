@@ -1,6 +1,5 @@
-const name = 'Backend Engineer';
-
 const Welcome = () => {
+  const name = 'Backend Engineer';
   return (
     <>
       <h1>Hello, {name}!</h1>
