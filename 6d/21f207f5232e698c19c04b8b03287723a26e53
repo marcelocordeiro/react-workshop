@@ -1,0 +1,56 @@
+WORKSHOP_SCRIPT.md
+  s_b7ea4f91d77301::t_b900007a3d1199 146-151,154,157-160,163,165
+  s_b7ea4f91d77301::t_ddcb6658540b5b 408-419,421
+  s_b7ea4f91d77301::t_cfaa0ecd4cc602 7,10,20,22-26,28,132
+  s_b7ea4f91d77301::t_131f7f593d3d90 420
+  s_b7ea4f91d77301::t_ba63b3ed36bfce 422
+  s_b7ea4f91d77301::t_8e4ca0c4bf352b 152-153
+  s_b7ea4f91d77301::t_1c7b646931a35b 155-156
+  s_b7ea4f91d77301::t_99559e6069958f 161-162
+  s_b7ea4f91d77301::t_93182986afe8fc 164
+src/components/Layout/Layout.tsx
+  s_b7ea4f91d77301::t_608af577e8d3fd 18-22,24,27-28,31-39,41,44-45,48-49
+src/components/03-Props/Greeting.tsx
+  h_52188101c1cb63 1-19
+src/pages/DomVsVdomPage.tsx
+  s_b7ea4f91d77301::t_4052745825725e 1-8,10-21,23-119,121-148,150-152,164-171
+  h_52188101c1cb63 153,155,157,160,162
+  s_b7ea4f91d77301::t_36ca53ed63f666 149,154,156,158-159,161,163
+  s_b7ea4f91d77301::t_8b8f2f6fc9a230 9
+  s_b7ea4f91d77301::t_18dee9268f70ba 22
+  s_b7ea4f91d77301::t_dafd17627bb7fd 120
+src/components/02-JSX/Welcome.tsx
+  h_52188101c1cb63 1-11
+src/components/04-useState/Counter.tsx
+  h_52188101c1cb63 1-56
+src/App.tsx
+  s_b7ea4f91d77301::t_f500b13052df3d 4
+  s_b7ea4f91d77301::t_86e3b6316a7ada 32
+src/pages/DomVsVdomPage.test.tsx
+  s_b7ea4f91d77301::t_41d78adbfee399 1-10,12-16,19-34,36,38-39
+  s_b7ea4f91d77301::t_4b1b143980e54d 37
+  s_b7ea4f91d77301::t_0f693c8e269c1d 11
+  s_b7ea4f91d77301::t_671bd4c637b5f0 17-18
+  s_b7ea4f91d77301::t_b557332aacdef5 35
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.15",
+  "base_commit_sha": "6d21f207f5232e698c19c04b8b03287723a26e53",
+  "prompts": {},
+  "humans": {
+    "h_52188101c1cb63": {
+      "author": "Marcelo Cordeiro <marcelo.cordeiro@deliveryhero.com>"
+    }
+  },
+  "sessions": {
+    "s_b7ea4f91d77301": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "0cc15ffb-cbe4-4233-af4a-6a11645157f9",
+        "model": "gemini-3.5-flash"
+      },
+      "human_author": "Marcelo Cordeiro <marcelo.cordeiro@deliveryhero.com>"
+    }
+  }
+}
