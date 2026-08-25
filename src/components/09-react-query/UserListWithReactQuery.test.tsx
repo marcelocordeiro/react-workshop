@@ -1,11 +1,10 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import axios from 'axios';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import UserList from './UserListWithReactQuery';
 
 // Mock axios
-vi.mock('axios');
+jest.mock('axios');
 
 // Create a QueryClient for each test to ensure isolation
 const createTestQueryClient = () =>
@@ -30,12 +29,12 @@ const renderWithClient = (ui: React.ReactElement) => {
 
 describe('UserListWithReactQuery', () => {
   beforeEach(() => {
-    vi.mocked(axios.get).mockClear(); // Clear axios mock calls
+    jest.mocked(axios.get).mockClear(); // Clear axios mock calls
   });
 
   it('displays loading spinner initially', () => {
     // Mock axios.get to return a pending promise to keep it in loading state
-    vi.mocked(axios.get).mockReturnValueOnce(new Promise(() => {}));
+    jest.mocked(axios.get).mockReturnValueOnce(new Promise(() => {}));
 
     renderWithClient(<UserList />);
     expect(screen.getByRole('progressbar')).toBeInTheDocument();
@@ -47,7 +46,7 @@ describe('UserListWithReactQuery', () => {
       { id: 2, name: 'Jane Smith', email: 'jane@example.com' },
     ];
 
-    vi.mocked(axios.get).mockResolvedValueOnce({ data: mockUsers });
+    jest.mocked(axios.get).mockResolvedValueOnce({ data: mockUsers });
 
     renderWithClient(<UserList />);
 
@@ -64,7 +63,7 @@ describe('UserListWithReactQuery', () => {
 
   it('displays error message on failed fetch', async () => {
     const errorMessage = 'Network Error'; // react-query passes the error message directly
-    vi.mocked(axios.get).mockRejectedValueOnce(new Error(errorMessage));
+    jest.mocked(axios.get).mockRejectedValueOnce(new Error(errorMessage));
 
     renderWithClient(<UserList />);
 

@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
 import JsxPage from './JsxPage';
 import Welcome from '../components/01-JSX/Welcome';
 
 // Mock the Welcome component
-vi.mock('../components/01-JSX/Welcome', () => ({
-  default: vi.fn(() => (
+jest.mock('../components/01-JSX/Welcome', () => ({
+  __esModule: true,
+  default: jest.fn(() => (
     <div data-testid="mock-welcome">Mock Welcome Component</div>
   )),
 }));

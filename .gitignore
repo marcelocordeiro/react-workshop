@@ -23,3 +23,9 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+
+# Vitest HTML reporter output (removed: project now uses Jest)
+html
+
+# Internal workshop scripts (reference real internal code, not for publication)
+WORKSHOP_2_*.md

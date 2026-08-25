@@ -1,20 +1,13 @@
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+// Vite is the dev server + bundler. Tests are configured separately in
+// jest.config.cjs, the same way your backend build tool and test runner
+// are configured in different blocks.
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   server: {
     open: true,
-  },
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: './src/test/setup.ts',
-    reporters: ['default', 'html'],
-    coverage: {
-      provider: 'istanbul',
-      reporter: ['text', 'json', 'html'],
-    },
   },
 });

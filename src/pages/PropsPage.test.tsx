@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 
-import { describe, it, expect, vi } from 'vitest';
 import PropsPage from './PropsPage';
 import Greeting from '../components/02-Props/Greeting';
 
 // Mock the Greeting component
-vi.mock('../components/02-Props/Greeting', () => ({
-  default: vi.fn(({ name, children }) => (
+jest.mock('../components/02-Props/Greeting', () => ({
+  __esModule: true,
+  default: jest.fn(({ name, children }) => (
     <div data-testid={`mock-greeting-${name}`}>
       Mock Greeting for {name}
       {children}
@@ -31,18 +31,18 @@ describe('PropsPage', () => {
     render(<PropsPage />);
     expect(Greeting).toHaveBeenCalled();
 
-    // Check first Greeting call
+    // First Greeting: the name came from a variable.
     expect(Greeting).toHaveBeenCalledWith(
-      expect.objectContaining({ name: 'Marcelo' }),
+      expect.objectContaining({ name: 'Ada' }),
       {},
     );
     expect(
       screen.getByText('This is a message passed as a child.'),
     ).toBeInTheDocument();
 
-    // Check second Greeting call
+    // Second Greeting: the name was a literal in the JSX.
     expect(Greeting).toHaveBeenCalledWith(
-      expect.objectContaining({ name: 'Marcelo' }),
+      expect.objectContaining({ name: 'Grace' }),
       {},
     );
     expect(

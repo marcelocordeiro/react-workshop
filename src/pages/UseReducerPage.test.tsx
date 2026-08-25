@@ -1,12 +1,14 @@
 import { render, screen } from '@testing-library/react';
 
-import { describe, it, expect, vi } from 'vitest';
 import UseReducerPage from './UseReducerPage';
 import Todo from '../components/06-useReducer/Todo';
 
 // Mock the Todo component
-vi.mock('../components/06-useReducer/Todo', () => ({
-  default: vi.fn(() => <div data-testid="mock-todo">Mock Todo Component</div>),
+jest.mock('../components/06-useReducer/Todo', () => ({
+  __esModule: true,
+  default: jest.fn(() => (
+    <div data-testid="mock-todo">Mock Todo Component</div>
+  )),
 }));
 
 describe('UseReducerPage', () => {

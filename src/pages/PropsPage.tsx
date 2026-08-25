@@ -2,7 +2,7 @@ import { Typography, Divider, Box } from '@mui/material';
 import Greeting from '../components/02-Props/Greeting';
 
 const PropsPage = () => {
-  const name = 'Marcelo';
+  const name = 'Ada';
   return (
     <Box>
       <Typography variant="h4" component="h1" gutterBottom>
@@ -16,7 +16,7 @@ const PropsPage = () => {
       <Greeting name={name}>
         <p>This is a message passed as a child.</p>
       </Greeting>
-      <Greeting name="Marcelo">
+      <Greeting name="Grace">
         <button>Click me!</button>
       </Greeting>
     </Box>

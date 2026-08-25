@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 
-import { describe, it, expect, vi } from 'vitest';
 import ThemeSwitcherPage from './ThemeSwitcherPage';
 import ThemeSwitcher from '../components/05-useContext/ThemeSwitcher';
 
 // Mock the ThemeSwitcher component
-vi.mock('../components/05-useContext/ThemeSwitcher', () => ({
-  default: vi.fn(() => (
+jest.mock('../components/05-useContext/ThemeSwitcher', () => ({
+  __esModule: true,
+  default: jest.fn(() => (
     <div data-testid="mock-theme-switcher">Mock ThemeSwitcher Component</div>
   )),
 }));

@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 
-import { describe, it, expect, vi } from 'vitest';
 import UseMemoPage from './UseMemoPage';
 import UseMemoDemo from '../components/07-useMemo/UseMemoDemo';
 
 // Mock the UseMemoDemo component
-vi.mock('../components/07-useMemo/UseMemoDemo', () => ({
-  default: vi.fn(() => (
+jest.mock('../components/07-useMemo/UseMemoDemo', () => ({
+  __esModule: true,
+  default: jest.fn(() => (
     <div data-testid="mock-usememo-demo">Mock UseMemoDemo Component</div>
   )),
 }));

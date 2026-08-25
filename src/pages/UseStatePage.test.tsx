@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
 import UseStatePage from './UseStatePage';
 import Counter from '../components/03-useState/Counter';
 
 // Mock the Counter component
-vi.mock('../components/03-useState/Counter', () => ({
-  default: vi.fn(() => (
+jest.mock('../components/03-useState/Counter', () => ({
+  __esModule: true,
+  default: jest.fn(() => (
     <div data-testid="mock-counter">Mock Counter Component</div>
   )),
 }));

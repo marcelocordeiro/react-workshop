@@ -6,7 +6,7 @@ import {
   Alert,
 } from '@mui/material';
 import axios from 'axios';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 interface User {
   id: number;
@@ -22,14 +22,21 @@ const fetchUsers = async () => {
 };
 
 const UserList = () => {
+  // One options object: the cache key, the function that fetches, and any
+  // policy (staleTime, retry, enabled, ...) all in one place.
   const {
     data: users,
-    isLoading,
+    isPending,
     isError,
     error,
-  } = useQuery<User[], Error>(['users'], () => fetchUsers());
+  } = useQuery<User[], Error>({
+    queryKey: ['users'],
+    queryFn: fetchUsers,
+  });
 
-  if (isLoading) {
+  // `isPending` means "no data yet". Use `isFetching` for "a request is in
+  // flight but I may already have cached data on screen".
+  if (isPending) {
     return <CircularProgress />;
   }
 

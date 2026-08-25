@@ -3,14 +3,14 @@ import { useState } from 'react';
 import Search from './Search';
 
 const allUsers = [
-  'Marcelo',
-  'Nisha',
-  'Eugene',
-  'Pasha',
-  'Nasir',
-  'Eunhee',
-  'Pradnya',
-  'Pranav',
+  'Ada',
+  'Alan',
+  'Barbara',
+  'Donald',
+  'Edsger',
+  'Grace',
+  'Linus',
+  'Radia',
 ];
 
 const shuffle = (array: string[]) =>

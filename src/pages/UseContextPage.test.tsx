@@ -1,18 +1,16 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
 import UseContextPage from './UseContextPage';
 import { Outlet } from 'react-router-dom';
 
-// Mock the Outlet component from react-router-dom
-vi.mock('react-router-dom', async (importOriginal) => {
-  const actual = await importOriginal();
-  return {
-    ...(actual as object),
-    Outlet: vi.fn(() => (
-      <div data-testid="mock-outlet">Mock Outlet Component</div>
-    )),
-  };
-});
+// Partially mock react-router-dom: keep everything real, replace only <Outlet />.
+// `jest.requireActual` is the Jest equivalent of a "spy on the real module" —
+// think of it as Mockito's `spy()` versus a full `mock()`.
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  Outlet: jest.fn(() => (
+    <div data-testid="mock-outlet">Mock Outlet Component</div>
+  )),
+}));
 
 describe('UseContextPage', () => {
   it('renders the page title and description', () => {

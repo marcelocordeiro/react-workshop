@@ -1,56 +1,87 @@
-# React Workshop Project
+# React Workshop
 
-This project serves as a hands-on workshop for backend engineers to familiarize themselves with core React concepts and frontend technologies.
+A hands-on workshop that takes experienced **backend engineers** (Java / Kotlin) from zero React to being able to read and contribute to a real React + TypeScript dashboard.
 
-## Technologies Used
+Every concept has a runnable page in the app and a matching chapter in [`WORKSHOP_SCRIPT.md`](./WORKSHOP_SCRIPT.md), with analogies to backend concepts you already know (dependency injection, `@Cacheable`, the Command pattern, `@PathVariable`, WireMock, Mockito…).
 
-This workshop project is built with the following tech stack:
+## Tech stack
 
-- **Build Tool:** Vite
-- **Language:** TypeScript
-- **Package Manager:** Yarn
-- **UI Library:** Material-UI (MUI)
-- **Data Fetching:** React Query + Axios
-- **Forms:** React Hook Form
-- **Routing:** React Router
+| Concern                 | Choice                                       |
+| ----------------------- | -------------------------------------------- |
+| Language                | TypeScript                                   |
+| Build tool / dev server | Vite                                         |
+| Package manager         | Yarn                                         |
+| UI components           | Material-UI (MUI) v5                         |
+| Data fetching           | `@tanstack/react-query` v5 + Axios           |
+| Forms                   | React Hook Form                              |
+| Routing                 | React Router v6                              |
+| Styling                 | `sx` prop, MUI `styled()`, styled-components |
+| Global state            | React context + Zustand                      |
+| i18n                    | react-i18next                                |
+| Tests                   | Jest + React Testing Library + MSW           |
 
-## Getting Started
+The script teaches the **current** API for each of these and gives a mapping table where a widely-used older version differs — React Router v6 ↔ v5 (chapter 15) and React Query v5 ↔ v3 (chapter 9) — so it works whether you are joining a recent codebase or one that has been shipping for years.
 
-Follow these steps to set up and run the workshop application:
-
-### 1. Install Dependencies
-
-Navigate to the project directory and install the required dependencies:
+## Getting started
 
 ```bash
 yarn install
+yarn start          # opens http://localhost:5173
 ```
 
-### 2. Run the Development Server
+Then open [`WORKSHOP_SCRIPT.md`](./WORKSHOP_SCRIPT.md) and follow along — the sidebar entries and the script chapters are numbered the same.
 
-Start the development server. The application will automatically open in your browser.
+## Commands
 
 ```bash
-yarn start
+yarn start          # dev server with hot reload
+yarn build          # type check (tsc -b) + production build
+yarn test           # run the test suite once
+yarn test:watch     # re-run tests on change
+yarn test Counter   # run only test files matching "Counter"
+yarn coverage       # coverage report -> open coverage/index.html
+yarn lint           # ESLint (includes Prettier as a rule)
+yarn format         # rewrite files with Prettier
 ```
 
-If it doesn't open automatically, you can manually navigate to `http://localhost:5173` (or the port indicated in your terminal).
+## What the workshop covers
 
-### 3. Explore the Workshop Content
+**Part I — Orientation:** what React is, the Java/Kotlin ↔ React "Rosetta Stone", what TypeScript buys you.
 
-The application is structured with a sidebar navigation, allowing you to explore different React concepts and their practical examples.
+**Part II — How React works:** the DOM, the Virtual DOM and reconciliation, why render must be pure, why state is a snapshot, the component lifecycle, the Rules of Hooks.
 
-### 4. Follow the Workshop Script
+**Part III — Modern JavaScript:** exports, destructuring, spread, immutability, the array methods you will use constantly, conditional rendering traps.
 
-For a detailed explanation of each concept and code example, refer to the `WORKSHOP_SCRIPT.md` file located in the root of this project. This file serves as a guide for the workshop.
+**Part IV — The chapters** (each one is a page in the app):
 
-## Project Structure
+| #   | Topic                                | #   | Topic                            |
+| --- | ------------------------------------ | --- | -------------------------------- |
+| 1   | JSX                                  | 10  | React Hook Form                  |
+| 2   | Props                                | 11  | `useRef`                         |
+| 3   | `useState`                           | 12  | Custom hooks                     |
+| 4   | `useEffect`                          | 13  | Mutations & cache invalidation   |
+| 5   | `useContext`                         | 14  | Styling                          |
+| 6   | `useReducer`                         | 15  | Routing (incl. v6 ↔ v5 mapping) |
+| 7   | `useMemo`                            | 16  | Global state with Zustand        |
+| 8   | `useCallback`                        | 17  | Internationalisation (i18n)      |
+| 9   | React Query (incl. v5 ↔ v3 mapping) |     |                                  |
 
-The `src` directory contains the main application code:
+**Part V — Practice:** testing (Jest + RTL, three ways to fake the network, Cypress E2E), browser DevTools, AI-assisted development (Figma MCP and Kaboom browser DevTools MCP), and a guide to the things a real production codebase does differently.
 
-- `src/components/`: Contains reusable UI components, organized by the React concept they demonstrate.
-- `src/pages/`: Contains the different pages of the application, each showcasing a specific React concept.
-- `src/App.tsx`: Defines the main routing for the application.
-- `src/main.tsx`: The entry point of the React application.
+## Project structure
 
-Feel free to explore the code and experiment with the examples!
+```
+src/
+├── main.tsx                     Entry point — providers wrap the app here
+├── App.tsx                      Route table
+├── components/
+│   ├── Layout/                  App bar + sidebar + <Outlet />
+│   ├── 01-JSX/ … 17-i18n/       One folder per chapter
+│   └── */*.test.tsx             Tests live next to what they test
+├── pages/                       One page per sidebar entry
+└── test/
+    ├── setup.ts                 jest-dom matchers + MSW server lifecycle
+    └── mocks/                   MSW handlers and server
+```
+
+Several chapters ship two versions of the same component — for example `UseCallbackDemo.tsx` (the problem) and `UseCallbackDemoFixed.tsx` (the fix), or `UserListWithReactQuery.test.tsx` (mocked HTTP client) and `UserListWithReactQuery.msw.test.tsx` (fake server). Diff them; that contrast is the lesson.

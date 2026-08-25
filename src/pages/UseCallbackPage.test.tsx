@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 
-import { describe, it, expect, vi } from 'vitest';
 import UseCallbackPage from './UseCallbackPage';
 import UseCallbackDemo from '../components/08-useCallback/UseCallbackDemoFixed'; // Note: UseCallbackDemoFixed is imported as UseCallbackDemo
 
 // Mock the UseCallbackDemoFixed component
-vi.mock('../components/08-useCallback/UseCallbackDemoFixed', () => ({
-  default: vi.fn(() => (
+jest.mock('../components/08-useCallback/UseCallbackDemoFixed', () => ({
+  __esModule: true,
+  default: jest.fn(() => (
     <div data-testid="mock-usecallback-demo">
       Mock UseCallbackDemo Component
     </div>

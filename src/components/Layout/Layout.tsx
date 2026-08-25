@@ -32,6 +32,20 @@ const navItems = [
   { text: '8. useCallback', path: '/usecallback' },
   { text: '9. React Query', path: '/react-query' },
   { text: '10. React Hook Form', path: '/react-hook-form' },
+  { text: '11. useRef', path: '/useref' },
+  { text: '12. Custom Hooks', path: '/custom-hooks' },
+  { text: '13. Mutations', path: '/mutations' },
+  { text: '14. Styling', path: '/styling' },
+  {
+    text: '15. Routing',
+    path: '/routing',
+    children: [
+      { text: '15.1 Order List', path: '/routing/orders' },
+      { text: '15.2 Order Detail', path: '/routing/orders/1002' },
+    ],
+  },
+  { text: '16. Zustand', path: '/zustand' },
+  { text: '17. i18n', path: '/i18n' },
 ];
 
 export const Layout = () => {

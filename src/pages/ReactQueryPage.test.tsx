@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 
-import { describe, it, expect, vi } from 'vitest';
 import ReactQueryPage from './ReactQueryPage';
 import UserListWithReactQuery from '../components/09-react-query/UserListWithReactQuery';
 
 // Mock the UserListWithReactQuery component
-vi.mock('../components/09-react-query/UserListWithReactQuery', () => ({
-  default: vi.fn(() => (
+jest.mock('../components/09-react-query/UserListWithReactQuery', () => ({
+  __esModule: true,
+  default: jest.fn(() => (
     <div data-testid="mock-userlist-react-query">
       Mock UserListWithReactQuery Component
     </div>
@@ -24,7 +24,7 @@ describe('ReactQueryPage', () => {
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        /`react-query` simplifies data fetching, caching, and synchronization./i,
+        /treats server data as a cache rather than as component/i,
       ),
     ).toBeInTheDocument();
   });

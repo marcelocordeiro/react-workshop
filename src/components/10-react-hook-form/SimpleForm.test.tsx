@@ -1,11 +1,10 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import SimpleForm from './SimpleForm';
 
 describe('SimpleForm', () => {
   // Mock window.alert as it's used in onSubmit
-  const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {});
+  const alertMock = jest.spyOn(window, 'alert').mockImplementation(() => {});
 
   beforeEach(() => {
     alertMock.mockClear();

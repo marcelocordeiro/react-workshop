@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, it, expect } from 'vitest'; // Vitest's globals
 import Counter from './Counter'; // Import the component to test
 
 describe('Counter', () => {

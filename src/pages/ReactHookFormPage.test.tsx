@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 
-import { describe, it, expect, vi } from 'vitest';
 import ReactHookFormPage from './ReactHookFormPage';
 import SimpleForm from '../components/10-react-hook-form/SimpleForm';
 
 // Mock the SimpleForm component
-vi.mock('../components/10-react-hook-form/SimpleForm', () => ({
-  default: vi.fn(() => (
+jest.mock('../components/10-react-hook-form/SimpleForm', () => ({
+  __esModule: true,
+  default: jest.fn(() => (
     <div data-testid="mock-simple-form">Mock SimpleForm Component</div>
   )),
 }));

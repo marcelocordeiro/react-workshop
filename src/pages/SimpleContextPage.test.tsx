@@ -1,12 +1,11 @@
 import { render, screen } from '@testing-library/react';
 
-import { describe, it, expect, vi } from 'vitest';
 import SimpleContextPage from './SimpleContextPage';
 import { SimpleContextExample } from '../components/05-useContext/SimpleContextExample';
 
 // Mock the ContextExample component
-vi.mock('../components/05-useContext/SimpleContextExample', () => ({
-  SimpleContextExample: vi.fn(() => (
+jest.mock('../components/05-useContext/SimpleContextExample', () => ({
+  SimpleContextExample: jest.fn(() => (
     <div data-testid="mock-context-example">Mock Simple Context Example</div>
   )),
 }));

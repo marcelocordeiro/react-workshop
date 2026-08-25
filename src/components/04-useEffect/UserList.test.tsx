@@ -1,15 +1,14 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
 import axios from 'axios';
 import UserList from './UserList';
 
 // Mock axios
-vi.mock('axios');
+jest.mock('axios');
 
 describe('UserList', () => {
   it('displays loading spinner initially', () => {
     // Mock axios.get to return a pending promise to keep it in loading state
-    vi.mocked(axios.get).mockReturnValueOnce(new Promise(() => {}));
+    jest.mocked(axios.get).mockReturnValueOnce(new Promise(() => {}));
 
     render(<UserList />);
     expect(screen.getByRole('progressbar')).toBeInTheDocument();
@@ -21,7 +20,7 @@ describe('UserList', () => {
       { id: 2, name: 'Jane Smith', email: 'jane@example.com' },
     ];
 
-    vi.mocked(axios.get).mockResolvedValueOnce({ data: mockUsers });
+    jest.mocked(axios.get).mockResolvedValueOnce({ data: mockUsers });
 
     render(<UserList />);
 
@@ -38,7 +37,7 @@ describe('UserList', () => {
 
   it('displays error message on failed fetch', async () => {
     const errorMessage = 'Failed to fetch users: Error: Network Error';
-    vi.mocked(axios.get).mockRejectedValueOnce(new Error('Network Error'));
+    jest.mocked(axios.get).mockRejectedValueOnce(new Error('Network Error'));
 
     render(<UserList />);
 

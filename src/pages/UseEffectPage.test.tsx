@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 
-import { describe, it, expect, vi } from 'vitest';
 import UseEffectPage from './UseEffectPage';
 import UserList from '../components/04-useEffect/UserList';
 
 // Mock the UserList component
-vi.mock('../components/04-useEffect/UserList', () => ({
-  default: vi.fn(() => (
+jest.mock('../components/04-useEffect/UserList', () => ({
+  __esModule: true,
+  default: jest.fn(() => (
     <div data-testid="mock-userlist">Mock UserList Component</div>
   )),
 }));
