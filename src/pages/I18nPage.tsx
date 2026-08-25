@@ -1,11 +1,11 @@
 import { Box, Typography, Divider } from '@mui/material';
-import I18nDemo from '../components/17-i18n/I18nDemo';
+import I18nDemo from '../components/18-i18n/I18nDemo';
 
 const I18nPage = () => {
   return (
     <Box>
       <Typography variant="h4" component="h1" gutterBottom>
-        17. Internationalisation (i18n)
+        18. Internationalisation (i18n)
       </Typography>
       <Typography paragraph>
         Every user-facing string comes from a translation file, looked up by

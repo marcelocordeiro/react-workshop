@@ -1,12 +1,12 @@
 import { Typography, Divider, Box } from '@mui/material';
-import Greeting from '../components/02-Props/Greeting';
+import Greeting from '../components/03-Props/Greeting';
 
 const PropsPage = () => {
   const name = 'Ada';
   return (
     <Box>
       <Typography variant="h4" component="h1" gutterBottom>
-        2. Props
+        3. Props
       </Typography>
       <Typography paragraph>
         Props (short for properties) are how you pass data from a parent

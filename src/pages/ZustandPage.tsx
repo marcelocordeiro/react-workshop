@@ -1,11 +1,11 @@
 import { Box, Typography, Divider } from '@mui/material';
-import ZustandDemo from '../components/16-zustand/ZustandDemo';
+import ZustandDemo from '../components/17-zustand/ZustandDemo';
 
 const ZustandPage = () => {
   return (
     <Box>
       <Typography variant="h4" component="h1" gutterBottom>
-        16. Global State with Zustand
+        17. Global State with Zustand
       </Typography>
       <Typography paragraph>
         `useContext` (chapter 5) shares state by wrapping the tree in a

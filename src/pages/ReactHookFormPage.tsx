@@ -1,11 +1,11 @@
 import { Typography, Divider, Box } from '@mui/material';
-import SimpleForm from '../components/10-react-hook-form/SimpleForm';
+import SimpleForm from '../components/11-react-hook-form/SimpleForm';
 
 const ReactHookFormPage = () => {
   return (
     <Box>
       <Typography variant="h4" component="h1" gutterBottom>
-        10. Forms with React Hook Form
+        11. Forms with React Hook Form
       </Typography>
       <Typography paragraph>
         `react-hook-form` is a powerful library for managing forms in React. It

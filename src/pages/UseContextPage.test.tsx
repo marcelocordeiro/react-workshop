@@ -16,7 +16,7 @@ describe('UseContextPage', () => {
   it('renders the page title and description', () => {
     render(<UseContextPage />);
     expect(
-      screen.getByRole('heading', { level: 1, name: /5. useContext Hook/i }),
+      screen.getByRole('heading', { level: 1, name: /6. useContext Hook/i }),
     ).toBeInTheDocument();
     expect(
       screen.getByText(

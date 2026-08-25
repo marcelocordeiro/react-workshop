@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 
 import UseEffectPage from './UseEffectPage';
-import UserList from '../components/04-useEffect/UserList';
+import UserList from '../components/05-useEffect/UserList';
 
 // Mock the UserList component
-jest.mock('../components/04-useEffect/UserList', () => ({
+jest.mock('../components/05-useEffect/UserList', () => ({
   __esModule: true,
   default: jest.fn(() => (
     <div data-testid="mock-userlist">Mock UserList Component</div>
@@ -15,7 +15,7 @@ describe('UseEffectPage', () => {
   it('renders the page title and description', () => {
     render(<UseEffectPage />);
     expect(
-      screen.getByRole('heading', { level: 1, name: /4. useEffect Hook/i }),
+      screen.getByRole('heading', { level: 1, name: /5. useEffect Hook/i }),
     ).toBeInTheDocument();
     expect(
       screen.getByText(

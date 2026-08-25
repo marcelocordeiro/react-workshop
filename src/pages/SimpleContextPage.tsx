@@ -1,12 +1,12 @@
 import { Typography, Divider, Box } from '@mui/material';
-import { SimpleContextExample } from '../components/05-useContext/SimpleContextExample';
-// import { SimpleContextExample } from '../components/05-useContext/SimpleContextInitialExample';
+import { SimpleContextExample } from '../components/06-useContext/SimpleContextExample';
+// import { SimpleContextExample } from '../components/06-useContext/SimpleContextInitialExample';
 
 const SimpleContextPage = () => {
   return (
     <Box>
       <Typography variant="h4" component="h1" gutterBottom>
-        5.1 Simple useContext Example
+        6.1 Simple useContext Example
       </Typography>
       <Typography paragraph>
         This is a simpler example demonstrating how `useContext` works. The

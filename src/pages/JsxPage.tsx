@@ -1,11 +1,11 @@
 import { Typography, Divider, Box } from '@mui/material';
-import Welcome from '../components/01-JSX/Welcome';
+import Welcome from '../components/02-JSX/Welcome';
 
 const JsxPage = () => {
   return (
     <Box>
       <Typography variant="h4" component="h1" gutterBottom>
-        1. JSX
+        2. JSX
       </Typography>
       <Typography paragraph>
         JSX is a syntax extension for JavaScript that looks like HTML. It allows

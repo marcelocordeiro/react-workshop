@@ -5,7 +5,7 @@ const RoutingPage = () => {
   return (
     <Box>
       <Typography variant="h4" component="h1" gutterBottom>
-        15. Routing
+        16. Routing
       </Typography>
       <Typography paragraph>
         The router maps a URL to a component tree. Routes nest, and each parent

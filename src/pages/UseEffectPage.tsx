@@ -1,11 +1,11 @@
 import { Typography, Divider, Box } from '@mui/material';
-import UserList from '../components/04-useEffect/UserList';
+import UserList from '../components/05-useEffect/UserList';
 
 const UseEffectPage = () => {
   return (
     <Box>
       <Typography variant="h4" component="h1" gutterBottom>
-        4. useEffect Hook
+        5. useEffect Hook
       </Typography>
       <Typography paragraph>
         The `useEffect` hook lets you perform side effects, like fetching data.

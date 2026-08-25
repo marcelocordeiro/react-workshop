@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 
 import UseReducerPage from './UseReducerPage';
-import Todo from '../components/06-useReducer/Todo';
+import Todo from '../components/07-useReducer/Todo';
 
 // Mock the Todo component
-jest.mock('../components/06-useReducer/Todo', () => ({
+jest.mock('../components/07-useReducer/Todo', () => ({
   __esModule: true,
   default: jest.fn(() => (
     <div data-testid="mock-todo">Mock Todo Component</div>
@@ -15,7 +15,7 @@ describe('UseReducerPage', () => {
   it('renders the page title and description', () => {
     render(<UseReducerPage />);
     expect(
-      screen.getByRole('heading', { level: 1, name: /6. useReducer Hook/i }),
+      screen.getByRole('heading', { level: 1, name: /7. useReducer Hook/i }),
     ).toBeInTheDocument();
     expect(
       screen.getByText(

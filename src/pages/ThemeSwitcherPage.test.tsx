@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 
 import ThemeSwitcherPage from './ThemeSwitcherPage';
-import ThemeSwitcher from '../components/05-useContext/ThemeSwitcher';
+import ThemeSwitcher from '../components/06-useContext/ThemeSwitcher';
 
 // Mock the ThemeSwitcher component
-jest.mock('../components/05-useContext/ThemeSwitcher', () => ({
+jest.mock('../components/06-useContext/ThemeSwitcher', () => ({
   __esModule: true,
   default: jest.fn(() => (
     <div data-testid="mock-theme-switcher">Mock ThemeSwitcher Component</div>
@@ -17,7 +17,7 @@ describe('ThemeSwitcherPage', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /5.2 Theme Switcher Example/i,
+        name: /6.2 Theme Switcher Example/i,
       }),
     ).toBeInTheDocument();
     expect(

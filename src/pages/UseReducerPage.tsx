@@ -1,13 +1,13 @@
 import { Typography, Divider, Box } from '@mui/material';
-import Todo from '../components/06-useReducer/Todo';
-// import Todo from '../components/06-useReducer/TodoBase';
-// import Todo from '../components/06-useReducer/TodoWithState';
+import Todo from '../components/07-useReducer/Todo';
+// import Todo from '../components/07-useReducer/TodoBase';
+// import Todo from '../components/07-useReducer/TodoWithState';
 
 const UseReducerPage = () => {
   return (
     <Box>
       <Typography variant="h4" component="h1" gutterBottom>
-        6. useReducer Hook
+        7. useReducer Hook
       </Typography>
       <Typography paragraph>
         `useReducer` is an alternative to `useState` for managing more complex

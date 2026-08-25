@@ -5,7 +5,7 @@ const UseContextPage = () => {
   return (
     <Box>
       <Typography variant="h4" component="h1" gutterBottom>
-        5. useContext Hook
+        6. useContext Hook
       </Typography>
       <Typography paragraph>
         The `useContext` hook allows you to share state across your component

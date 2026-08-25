@@ -76,7 +76,7 @@ src/
 ├── App.tsx                      Route table
 ├── components/
 │   ├── Layout/                  App bar + sidebar + <Outlet />
-│   ├── 01-JSX/ … 17-i18n/       One folder per chapter
+│   ├── 02-JSX/ … 18-i18n/       One folder per chapter
 │   └── */*.test.tsx             Tests live next to what they test
 ├── pages/                       One page per sidebar entry
 └── test/

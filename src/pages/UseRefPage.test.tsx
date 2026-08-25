@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import UseRefPage from './UseRefPage';
-import UseRefDemo from '../components/11-useRef/UseRefDemo';
+import UseRefDemo from '../components/12-useRef/UseRefDemo';
 
-jest.mock('../components/11-useRef/UseRefDemo', () => ({
+jest.mock('../components/12-useRef/UseRefDemo', () => ({
   __esModule: true,
   default: jest.fn(() => <div data-testid="mock-useref-demo" />),
 }));
@@ -12,7 +12,7 @@ describe('UseRefPage', () => {
     render(<UseRefPage />);
 
     expect(
-      screen.getByRole('heading', { level: 1, name: /11. useRef Hook/i }),
+      screen.getByRole('heading', { level: 1, name: /12. useRef Hook/i }),
     ).toBeInTheDocument();
     expect(screen.getByTestId('mock-useref-demo')).toBeInTheDocument();
     expect(UseRefDemo).toHaveBeenCalled();

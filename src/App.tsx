@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import Home from './pages/Home';
+import DomVsVdomPage from './pages/DomVsVdomPage';
 import JsxPage from './pages/JsxPage';
 import PropsPage from './pages/PropsPage';
 import UseStatePage from './pages/UseStatePage';
@@ -18,8 +19,8 @@ import CustomHooksPage from './pages/CustomHooksPage';
 import MutationsPage from './pages/MutationsPage';
 import StylingPage from './pages/StylingPage';
 import RoutingPage from './pages/RoutingPage';
-import OrderList from './components/15-routing/OrderList';
-import OrderDetail from './components/15-routing/OrderDetail';
+import OrderList from './components/16-routing/OrderList';
+import OrderDetail from './components/16-routing/OrderDetail';
 import ZustandPage from './pages/ZustandPage';
 import I18nPage from './pages/I18nPage';
 
@@ -28,6 +29,7 @@ const App = () => {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="dom-vdom" element={<DomVsVdomPage />} />
         <Route path="jsx" element={<JsxPage />} />
         <Route path="props" element={<PropsPage />} />
         <Route path="usestate" element={<UseStatePage />} />

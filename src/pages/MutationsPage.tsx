@@ -1,11 +1,11 @@
 import { Box, Typography, Divider } from '@mui/material';
-import AddUser from '../components/13-mutations/AddUser';
+import AddUser from '../components/14-mutations/AddUser';
 
 const MutationsPage = () => {
   return (
     <Box>
       <Typography variant="h4" component="h1" gutterBottom>
-        13. Mutations & Cache Invalidation
+        14. Mutations & Cache Invalidation
       </Typography>
       <Typography paragraph>
         `useQuery` is for reads. `useMutation` is for writes (POST / PUT /

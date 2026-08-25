@@ -1,11 +1,11 @@
 import { Box, Typography, Divider } from '@mui/material';
-import CustomHooksDemo from '../components/12-custom-hooks/CustomHooksDemo';
+import CustomHooksDemo from '../components/13-custom-hooks/CustomHooksDemo';
 
 const CustomHooksPage = () => {
   return (
     <Box>
       <Typography variant="h4" component="h1" gutterBottom>
-        12. Custom Hooks
+        13. Custom Hooks
       </Typography>
       <Typography paragraph>
         A custom hook is a plain function that calls other hooks and whose name

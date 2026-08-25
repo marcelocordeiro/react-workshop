@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 
 import PropsPage from './PropsPage';
-import Greeting from '../components/02-Props/Greeting';
+import Greeting from '../components/03-Props/Greeting';
 
 // Mock the Greeting component
-jest.mock('../components/02-Props/Greeting', () => ({
+jest.mock('../components/03-Props/Greeting', () => ({
   __esModule: true,
   default: jest.fn(({ name, children }) => (
     <div data-testid={`mock-greeting-${name}`}>
@@ -18,7 +18,7 @@ describe('PropsPage', () => {
   it('renders the page title and description', () => {
     render(<PropsPage />);
     expect(
-      screen.getByRole('heading', { level: 1, name: /2. Props/i }),
+      screen.getByRole('heading', { level: 1, name: /3. Props/i }),
     ).toBeInTheDocument();
     expect(
       screen.getByText(

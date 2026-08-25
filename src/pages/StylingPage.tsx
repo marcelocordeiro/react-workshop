@@ -1,11 +1,11 @@
 import { Box, Typography, Divider } from '@mui/material';
-import StylingDemo from '../components/14-styling/StylingDemo';
+import StylingDemo from '../components/15-styling/StylingDemo';
 
 const StylingPage = () => {
   return (
     <Box>
       <Typography variant="h4" component="h1" gutterBottom>
-        14. Styling
+        15. Styling
       </Typography>
       <Typography paragraph>
         There is no single way to style a React app, and most real codebases mix

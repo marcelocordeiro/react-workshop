@@ -1,12 +1,12 @@
 import { Typography, Divider, Box } from '@mui/material';
-// import UseCallbackDemo from '../components/08-useCallback/UseCallbackDemo';
-import UseCallbackDemo from '../components/08-useCallback/UseCallbackDemoFixed';
+// import UseCallbackDemo from '../components/09-useCallback/UseCallbackDemo';
+import UseCallbackDemo from '../components/09-useCallback/UseCallbackDemoFixed';
 
 const UseCallbackPage = () => {
   return (
     <Box>
       <Typography variant="h4" component="h1" gutterBottom>
-        8. useCallback Hook
+        9. useCallback Hook
       </Typography>
       <Typography paragraph>
         `useCallback` memoizes a function definition. When you pass callbacks to

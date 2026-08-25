@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 
 import ReactQueryPage from './ReactQueryPage';
-import UserListWithReactQuery from '../components/09-react-query/UserListWithReactQuery';
+import UserListWithReactQuery from '../components/10-react-query/UserListWithReactQuery';
 
 // Mock the UserListWithReactQuery component
-jest.mock('../components/09-react-query/UserListWithReactQuery', () => ({
+jest.mock('../components/10-react-query/UserListWithReactQuery', () => ({
   __esModule: true,
   default: jest.fn(() => (
     <div data-testid="mock-userlist-react-query">
@@ -19,7 +19,7 @@ describe('ReactQueryPage', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /9. React Query for Data Fetching/i,
+        name: /10. React Query for Data Fetching/i,
       }),
     ).toBeInTheDocument();
     expect(

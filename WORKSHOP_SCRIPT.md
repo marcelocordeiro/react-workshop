@@ -4,12 +4,12 @@
 
 This workshop is written for experienced **backend engineers** (Java, Kotlin, or similar) who are about to start contributing to a React + TypeScript dashboard and have little or no frontend background.
 
-- Every numbered chapter from **1 to 17** maps 1:1 to a page in the sidebar of the companion app. Run `yarn start`, open the page, and read the chapter next to it.
+- Every numbered chapter from **1 to 18** maps 1:1 to a page in the sidebar of the companion app. Run `yarn start`, open the page, and read the chapter next to it.
 - Analogies are given in **Java** first, with a **Kotlin** note where the Kotlin idiom is closer.
 - The examples here are deliberately tiny. The goal is that you recognise the _shape_ of the code when you open a real 500-line screen, not that you memorise APIs.
-- Chapters **18 onwards** are about the surrounding practice: testing, browser tooling, AI-assisted development, and the ways a real production codebase differs from this clean example app.
+- Chapters **19 onwards** are about the surrounding practice: testing, browser tooling, AI-assisted development, and the ways a real production codebase differs from this clean example app.
 
-**A note on library versions.** Two codebases can be equally healthy React and still share almost no import lines. Where that happens, this script teaches the **current** API and gives you a mapping table for the older one — routing (chapter 15) and data fetching (chapter 9) both get one. Read the table in whichever direction your repo needs. Chapter 21 collects every such difference in one place.
+**A note on library versions.** Two codebases can be equally healthy React and still share almost no import lines. Where that happens, this script teaches the **current** API and gives you a mapping table for the older one — routing (chapter 16) and data fetching (chapter 11) both get one. Read the table in whichever direction your repo needs. Chapter 22 collects every such difference in one place.
 
 **Suggested pacing for a live session (~4h with a break):**
 
@@ -17,15 +17,15 @@ This workshop is written for experienced **backend engineers** (Java, Kotlin, or
 | ---------------------------- | ---------- | ------ |
 | Orientation                  | Part I     | 30 min |
 | Rendering & JS refresher     | Part II    | 25 min |
-| Core hooks                   | 1–6        | 50 min |
+| Core hooks                   | 2–7        | 50 min |
 | _Break_                      |            | 10 min |
-| Performance & escape hatches | 7–8, 11–12 | 30 min |
-| Server state & forms         | 9, 10, 13  | 35 min |
-| Styling & routing            | 14–15      | 20 min |
-| State & strings at scale     | 16–17      | 25 min |
-| Testing & tooling            | 18–20      | 35 min |
+| Performance & escape hatches | 8–9, 12–13 | 30 min |
+| Server state & forms         | 10, 11, 14 | 35 min |
+| Styling & routing            | 15–16      | 20 min |
+| State & strings at scale     | 17–18      | 25 min |
+| Testing & tooling            | 19–21      | 35 min |
 
-If you are short on time, chapters 7, 8 and 14 are the safest to skim — they are the ones you can learn on demand later.
+If you are short on time, chapters 8, 9 and 15 are the safest to skim — they are the ones you can learn on demand later.
 
 ---
 
@@ -129,7 +129,7 @@ There is no single "React stack". The table below shows this workshop app next t
 | Unit tests         | Jest + RTL + MSW                         | Jest + RTL + MSW                | Jest + RTL + **injected fake client** |
 | E2E tests          | none                                     | none                            | **Cypress**                           |
 
-Read that table as reassurance, not as a warning. **Every concept in this workshop applies to all three columns.** What differs is import lines, a handful of function names, and which library owns a job. Chapter 21 lists every difference you are likely to hit, and chapters 9 and 15 give you direct mapping tables for the two that bite hardest.
+Read that table as reassurance, not as a warning. **Every concept in this workshop applies to all three columns.** What differs is import lines, a handful of function names, and which library owns a job. Chapter 22 lists every difference you are likely to hit, and chapters 10 and 16 give you direct mapping tables for the two that bite hardest.
 
 ---
 
@@ -142,6 +142,26 @@ You will be more effective if you understand the engine before the API. This par
 When a browser loads a page it parses the HTML into a tree of objects called the **DOM** (Document Object Model). It is a live, in-memory model of the document — the same idea as parsing XML into a tree of nodes on the backend, except that mutating this tree repaints the screen.
 
 The problem: DOM mutations are expensive. Changing an element can force the browser to recompute layout and repaint (_reflow_ and _repaint_). Doing that a hundred times in a loop is a real performance cliff.
+
+**Live Console Demos (Run these on the companion app with Paint Flashing turned on):**
+
+1. **Local Repaint (Cheap Mutation):**
+
+   ```javascript
+   document.getElementsByClassName(
+     'MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-8u39c-MuiTypography-root',
+   )[0].innerText = 'Hello!!!!';
+   ```
+
+   _Explanation:_ Notice how only that specific header element flashes green. The browser is highly optimized: since this text change didn't push or resize surrounding elements, the browser only calculated layout for that one element and performed a highly localized repaint of its visual bounds.
+
+2. **Reflow Cascade (Expensive Mutation):**
+   ```javascript
+   document.getElementsByClassName(
+     'MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root',
+   )[5].style.height = '200px';
+   ```
+   _Explanation:_ Watch as the elements below it also flash green. Because we modified a layout property (height), the browser had to run a global **Reflow** (recalculating coordinates for all subsequent elements shifted down), forcing a cascade of layout recalculations and repaints.
 
 ## The Virtual DOM and reconciliation
 
@@ -385,7 +405,21 @@ The trap: `&&` renders the _left_ value when it is falsy and not a boolean. `{it
 
 Each chapter below matches a sidebar page in the companion app.
 
-## 1. JSX
+## 1. DOM vs. Virtual DOM (VDOM)
+
+To be effective in React, it helps to understand the rendering engine. When state changes, React goes through a standard four-step cycle to keep the UI in sync with your data:
+
+1. **State change** — you trigger an update by calling a state setter function, e.g., `setCount(1)`.
+2. **Render** — React calls your component functions top-to-bottom and builds a brand new Virtual DOM tree (a lightweight blueprint of plain JavaScript objects).
+3. **Diffing** — React compares (diffs) the new Virtual DOM tree with the previous one to compute the exact delta (minimum operations needed).
+4. **Commit** — React surgically applies that minimal set of updates to the real DOM (e.g., updating a single text node instead of deleting and recreating the parent).
+
+### Two Key Takeaways:
+
+- **Render is cheap; commit is not:** Creating plain JavaScript object blueprints in the Virtual DOM is fast and low-overhead. Modifying the real DOM is very expensive because it forces the browser to recalculate layout and repaint pixels.
+- **`key` defines identity (The Secret Weapon):** A `key` is not just for arrays—it defines element identity. React matches virtual nodes to real state using their key. By changing the key of a single component (e.g., `<UserForm key={userId} />`), you can force React to completely unmount and rebuild that element from scratch, instantly resetting all of its local state. This is a highly declarative way to reset form drafts or drawer state without messy synchronization effects!
+
+## 2. JSX
 
 JSX looks like HTML but is JavaScript. The build step turns it into function calls.
 
@@ -403,7 +437,7 @@ So JSX is a **type-safe builder DSL**. That explains all of its rules:
 - Self-close every empty element: `<br />`, `<img />`.
 - Comments inside JSX are `{/* like this */}`.
 
-**`src/components/01-JSX/Welcome.tsx`**
+**`src/components/02-JSX/Welcome.tsx`**
 
 ```tsx
 const name = 'Backend Engineer';
@@ -422,7 +456,7 @@ export default Welcome;
 
 Worth stating out loud: that `new Date()` runs on **every render**. JSX is not a template that is evaluated once — it is code.
 
-## 2. Props
+## 3. Props
 
 Props are the inputs to a component: one immutable object, passed by the parent.
 
@@ -430,7 +464,7 @@ Props are the inputs to a component: one immutable object, passed by the parent.
 - **Anything can be a prop** — numbers, objects, functions, and even other components.
 - **`children`** is the special prop holding whatever was nested inside your tags.
 
-**`src/components/02-Props/Greeting.tsx`**
+**`src/components/03-Props/Greeting.tsx`**
 
 ```tsx
 import { ReactNode } from 'react';
@@ -484,7 +518,7 @@ const SearchBox = ({ value, onChange }) => (
 
 This pattern has a name — **lifting state up**. When two siblings need the same data, it moves to their nearest common parent.
 
-## 3. useState
+## 4. useState
 
 `useState` adds a piece of state to a component.
 
@@ -493,7 +527,7 @@ This pattern has a name — **lifting state up**. When two siblings need the sam
 - Use the **updater form** whenever the new value derives from the old one.
 - Updates are **batched**: several setter calls in one event handler produce one re-render.
 
-**`src/components/03-useState/Counter.tsx`**
+**`src/components/04-useState/Counter.tsx`**
 
 ```tsx
 import { Button, Typography, Box } from '@mui/material';
@@ -526,11 +560,11 @@ export default Counter;
 Beginners over-use state. Ask, in order:
 
 1. **Can it be derived from existing state or props?** Then compute it during render — do not store it. A `filteredUsers` state that must be kept in sync with `users` and `query` is a bug waiting to happen.
-2. **Is it server data?** Then it belongs in React Query (chapter 9), not `useState`.
-3. **Does it need to be shared?** Lift it to a common parent, or use context (chapter 5).
-4. **Does the UI need to change when it changes?** If not, it is a ref (chapter 11).
+2. **Is it server data?** Then it belongs in React Query (chapter 11), not `useState`.
+3. **Does it need to be shared?** Lift it to a common parent, or use context (chapter 6).
+4. **Does the UI need to change when it changes?** If not, it is a ref (chapter 12).
 
-## 4. useEffect
+## 5. useEffect
 
 An **effect** is anything that reaches outside React: network calls, subscriptions, timers, direct DOM work, logging.
 
@@ -546,7 +580,7 @@ useEffect(fn, deps);
 
 The dependency array is not a suggestion; it is the correctness contract. Anything from the component that the effect reads must be listed. The lint rule tells you what is missing — believe it.
 
-**`src/components/04-useEffect/UserList.tsx`** — data fetching the manual way
+**`src/components/05-useEffect/UserList.tsx`** — data fetching the manual way
 
 ```tsx
 const UserList = () => {
@@ -593,11 +627,11 @@ Note the shape: **three pieces of state for one request**, and an early return p
 - no cancellation — a slow response can land after the component unmounted, or two responses can arrive out of order
 - no retry, no background refresh
 
-That list is precisely what React Query exists to solve, which is why chapter 9 replaces this code. Learn this version anyway: you need to recognise it, and effects remain the right tool for **non-server** side effects.
+That list is precisely what React Query exists to solve, which is why chapter 10 replaces this code. Learn this version anyway: you need to recognise it, and effects remain the right tool for **non-server** side effects.
 
 > **Do not use an effect to sync state with state.** If `b` can be computed from `a`, compute it during render. An effect that watches `a` and calls `setB` renders twice and will eventually get out of sync.
 
-## 5. useContext
+## 6. useContext
 
 Passing a prop through five intermediate components that do not use it is called **prop drilling**. Context is the escape hatch.
 
@@ -609,7 +643,7 @@ Passing a prop through five intermediate components that do not use it is called
 
 ### 5.1 A minimal shared value
 
-**`src/components/05-useContext/SimpleContextExample.tsx`**
+**`src/components/06-useContext/SimpleContextExample.tsx`**
 
 ```tsx
 interface GlobalStateContextType {
@@ -670,7 +704,7 @@ That is the pattern you will see most often in a real codebase: a context file, 
 
 The context object and the provider component live in **separate files**. That is not arbitrary: the dev server's hot reload gets confused by a module that exports both a component and a non-component, so the convention is to split them.
 
-**`src/components/05-useContext/theme-context.ts`**
+**`src/components/06-useContext/theme-context.ts`**
 
 ```tsx
 export const ThemeContext = createContext<ThemeContextType>({
@@ -679,7 +713,7 @@ export const ThemeContext = createContext<ThemeContextType>({
 });
 ```
 
-**`src/components/05-useContext/ThemeProvider.tsx`**
+**`src/components/06-useContext/ThemeProvider.tsx`**
 
 ```tsx
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
@@ -699,7 +733,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 };
 ```
 
-**`src/components/05-useContext/ThemeSwitcher.tsx`**
+**`src/components/06-useContext/ThemeSwitcher.tsx`**
 
 ```tsx
 const ThemeSwitcher = () => {
@@ -746,9 +780,9 @@ const value = useMemo(() => ({ user, setUser }), [user]);
 <Ctx.Provider value={value}>
 ```
 
-Context is for low-frequency, widely-read values: theme, current user, permissions, selected market. **It is not a cache for server data** — that is chapter 9.
+Context is for low-frequency, widely-read values: theme, current user, permissions, selected market. **It is not a cache for server data** — that is chapter 10.
 
-## 6. useReducer
+## 7. useReducer
 
 When state has several fields that change together, or the next state depends on the current one in non-trivial ways, `useState` starts to sprawl. `useReducer` centralises the transitions.
 
@@ -758,7 +792,7 @@ When state has several fields that change together, or the next state depends on
 
 > **Java analogy.** The Command pattern, or an event-sourced aggregate: `apply(state, event)` returns the next state and never mutates. In Kotlin the action type is naturally a `sealed class` with an exhaustive `when`.
 
-**`src/components/06-useReducer/Todo.tsx`**
+**`src/components/07-useReducer/Todo.tsx`**
 
 ```tsx
 interface Todo {
@@ -815,7 +849,7 @@ Three things to point out:
 
 Note that transient UI state (`text`, the input value) stays in `useState`. It is fine — and normal — to mix both.
 
-## 7. useMemo
+## 8. useMemo
 
 `useMemo` caches the **result of a calculation** between renders.
 
@@ -827,7 +861,7 @@ React re-runs the function only when a dependency changes; otherwise it hands ba
 
 > **Java analogy.** `@Cacheable` on a pure method, keyed by its arguments. `by lazy` in Kotlin is close, except `useMemo` recomputes when the key changes.
 
-**`src/components/07-useMemo/UseMemoDemo.tsx`** — the problem
+**`src/components/08-useMemo/UseMemoDemo.tsx`** — the problem
 
 ```tsx
 const ARRAY_SIZE = 29_999_999;
@@ -874,7 +908,7 @@ Reach for it when:
 
 That second reason is the more common one in real code. Measure before optimising — the React DevTools Profiler will tell you what is actually slow.
 
-## 8. useCallback
+## 9. useCallback
 
 In JavaScript, functions are values. Every render creates a **new function object**, even if the code is identical:
 
@@ -886,7 +920,7 @@ a === b; // false
 
 Normally harmless. It matters when the function is a prop to a child wrapped in `React.memo`. `React.memo` skips re-rendering when props are equal — and a brand-new function is never equal to the old one, so the memo never hits.
 
-**`src/components/08-useCallback/Search.tsx`**
+**`src/components/09-useCallback/Search.tsx`**
 
 ```tsx
 const Search = ({ handleSearch }: { handleSearch: (text: string) => void }) => {
@@ -935,9 +969,9 @@ Note that `setUsers` is safe to omit from the dependencies — React guarantees 
 
 **The rule:** `useCallback` is only useful if the consumer cares about function identity — a `React.memo` child, a dependency array, or a custom hook's return value. Wrapping a plain `onClick` that goes straight onto a `<button>` achieves nothing.
 
-## 9. React Query — server state
+## 10. React Query — server state
 
-Go back to the `useEffect` version in chapter 4 and count the concerns it mixes: request lifecycle, loading flag, error flag, and the data itself, all hand-rolled in a component.
+Go back to the `useEffect` version in chapter 5 and count the concerns it mixes: request lifecycle, loading flag, error flag, and the data itself, all hand-rolled in a component.
 
 The insight behind React Query is that **server data is not application state — it is a cache of someone else's state**. Caches have their own concerns: staleness, invalidation, deduplication, retries, background refresh. You already know this from the backend; the mistake is re-implementing it per component.
 
@@ -951,7 +985,7 @@ What it gives you out of the box:
 - **Retries** with backoff, and refetch on window refocus or reconnect.
 - **Devtools** to inspect every cached query.
 
-**`src/components/09-react-query/UserListWithReactQuery.tsx`**
+**`src/components/10-react-query/UserListWithReactQuery.tsx`**
 
 ```tsx
 interface User {
@@ -995,7 +1029,7 @@ const UserList = () => {
 };
 ```
 
-Same behaviour as chapter 4, with three `useState` calls and an effect deleted.
+Same behaviour as chapter 5, with three `useState` calls and an effect deleted.
 
 ### The query key is the API you need to understand
 
@@ -1056,7 +1090,7 @@ That last row matters more than it looks. In v3, a query can react to its own re
 
 Everything else in this chapter — keys, prefix invalidation, staleness, `enabled`, the pending/fetching distinction — is identical in both.
 
-## 10. React Hook Form
+## 11. React Hook Form
 
 Forms are where frontend state gets genuinely hard: field values, validation rules, error messages, dirty/touched tracking, and submit lifecycle.
 
@@ -1068,7 +1102,7 @@ The naive approach is a `useState` per field, re-rendering the whole form on eve
 
 > **Java analogy.** `formState.errors` is your `BindingResult`, and the `rules` object is a Bean Validation annotation — `@NotNull`, `@Pattern` — declared inline instead of on a field.
 
-**`src/components/10-react-hook-form/SimpleForm.tsx`**
+**`src/components/11-react-hook-form/SimpleForm.tsx`**
 
 ```tsx
 interface IFormInput {
@@ -1147,7 +1181,7 @@ Two more hooks you will meet immediately in real forms:
 - **`watch('fieldName')`** — subscribe to a field's value to drive conditional UI. It re-renders on every change, so use it deliberately.
 - **`setValue('fieldName', v)`** — set a field programmatically, typically to cascade (choosing a country resets the city).
 
-## 11. useRef
+## 12. useRef
 
 `useRef` gives you a mutable box that survives re-renders. Two distinct jobs:
 
@@ -1163,7 +1197,7 @@ The defining property: **mutating `ref.current` does not trigger a render.** Tha
 | Read during render     | safe                   | avoid — it may be stale or mid-update |
 | Use for                | anything the user sees | bookkeeping the user never sees       |
 
-**`src/components/11-useRef/UseRefDemo.tsx`**
+**`src/components/12-useRef/UseRefDemo.tsx`**
 
 ```tsx
 const UseRefDemo = () => {
@@ -1206,13 +1240,13 @@ const UseRefDemo = () => {
 
 > **Java analogy.** A plain mutable field on an object that no framework is watching. Compare with state, which is a field with a change listener attached.
 
-## 12. Custom hooks
+## 13. Custom hooks
 
 A custom hook is **a function whose name starts with `use` and that calls other hooks**. There is no registration, no base class, no annotation. The naming convention is what lets the linter enforce the Rules of Hooks inside it.
 
 This is the primary unit of reuse in React. Components are for reusing _markup_; hooks are for reusing _behaviour_.
 
-**`src/components/12-custom-hooks/useDebouncedValue.ts`**
+**`src/components/13-custom-hooks/useDebouncedValue.ts`**
 
 ```ts
 export const useDebouncedValue = <T>(value: T, delayMs = 400): T => {
@@ -1243,7 +1277,7 @@ const { data } = useQuery(['users', debouncedQuery], () =>
 
 That four-line combination replaces the debounce-plus-cancel-plus-race-condition code you would otherwise hand-write on every search screen.
 
-**`src/components/12-custom-hooks/useToggle.ts`** — returning a tuple, like `useState` does, so the caller names things:
+**`src/components/13-custom-hooks/useToggle.ts`** — returning a tuple, like `useState` does, so the caller names things:
 
 ```ts
 export const useToggle = (initialValue = false) => {
@@ -1257,17 +1291,17 @@ export const useToggle = (initialValue = false) => {
 };
 ```
 
-The critical thing to internalise: **calling a hook does not share state, it creates state.** Two components calling `useToggle()` get two independent booleans — like two instances of a class, not one static field. If you want shared state, that is context (chapter 5) or a query cache (chapter 9).
+The critical thing to internalise: **calling a hook does not share state, it creates state.** Two components calling `useToggle()` get two independent booleans — like two instances of a class, not one static field. If you want shared state, that is context (chapter 6) or a query cache (chapter 9).
 
 In a real codebase, custom hooks are where most of the interesting logic lives. When you open an unfamiliar screen, the component is often a thin shell and the answers are in the two or three hooks it calls.
 
-## 13. Mutations and cache invalidation
+## 14. Mutations and cache invalidation
 
 `useQuery` reads. `useMutation` writes.
 
 The difference is not cosmetic: reads can run automatically and be retried freely; writes must be triggered explicitly and are not safely retryable. So mutations do not run on mount — you call `mutate()`.
 
-**`src/components/13-mutations/AddUser.tsx`**
+**`src/components/14-mutations/AddUser.tsx`**
 
 ```tsx
 const AddUser = () => {
@@ -1313,7 +1347,7 @@ Symptoms of a missing invalidation are recognisable: "I saved it and the table d
 
 **Demo to run live:** open React Query Devtools, add a user, and watch the `['users']` query flip to stale and refetch.
 
-## 14. Styling
+## 15. Styling
 
 There is no single way to style a React app, and most real codebases mix two or three. All the approaches below generate scoped class names at runtime — you almost never hand-write a global stylesheet.
 
@@ -1325,7 +1359,7 @@ There is no single way to style a React app, and most real codebases mix two or 
 
 The examples below use MUI, which is what this app is built on. Some codebases have **no MUI at all** — they use an in-house design system, and import `Box`, `Button` and `Spinner` from that instead. When that happens, the component names change and the token names change; the three ideas above do not. Whichever you are in, the working rule is the same: **use the library and the tokens the file already uses**, and never introduce a raw colour.
 
-**`src/components/14-styling/StylingDemo.tsx`**
+**`src/components/15-styling/StylingDemo.tsx`**
 
 ### A. The `sx` prop — one-off styles
 
@@ -1364,7 +1398,7 @@ A separate library with the same idea. The `$` prefix is a styled-components con
 
 **Rule of thumb:** `sx` for a one-off tweak, `styled()` when the look repeats. Follow whatever the file you are editing already does — consistency inside a screen beats your personal preference.
 
-## 15. Routing
+## 16. Routing
 
 The router maps a URL to a component tree. Everything the user can navigate to is a route.
 
@@ -1447,9 +1481,9 @@ If you open a file with `useHistory`, `<Switch>`, `exact`, or `useRouteMatch`, y
 
 # Part V — Practice
 
-## 16. Global state with Zustand
+## 17. Global state with Zustand
 
-Chapter 5 solved sharing with context: wrap the tree in a provider, read it with a hook. That works, and for low-frequency values like theme or current user it is often all you need.
+Chapter 6 solved sharing with context: wrap the tree in a provider, read it with a hook. That works, and for low-frequency values like theme or current user it is often all you need.
 
 A **store library** solves the same problem differently: the state lives _outside_ the React tree, and components subscribe to it.
 
@@ -1463,7 +1497,7 @@ Three practical differences, and they are the reason store libraries exist:
 | Who re-renders on change | **Every** consumer of the context  | Only components whose **selected slice** changed |
 | Usable outside React     | No                                 | Yes — `useCartStore.getState()`                  |
 
-**`src/components/16-zustand/cartStore.ts`**
+**`src/components/17-zustand/cartStore.ts`**
 
 ```ts
 import { create } from 'zustand';
@@ -1505,7 +1539,7 @@ const totalItems = useCartStore((state) =>
 );
 ```
 
-The function you pass is a **selector**: it says which part of the store this component depends on. Zustand re-renders the component only when that selection changes. Compare with context, where any change to the provider's value re-renders every consumer — the caveat at the end of chapter 5.
+The function you pass is a **selector**: it says which part of the store this component depends on. Zustand re-renders the component only when that selection changes. Compare with context, where any change to the provider's value re-renders every consumer — the caveat at the end of chapter 6.
 
 ```tsx
 // ❌ Subscribes to the whole store: re-renders on every unrelated change
@@ -1529,13 +1563,13 @@ beforeEach(() => {
 
 **2. It is not a place for server data.** A store is tempting for "the list of users I fetched", and it is the wrong tool: you would be re-implementing caching, staleness and invalidation by hand. Server data belongs in React Query (chapters 9 and 13); a store is for **client** state that many places need — a selected market, a draft, UI preferences, permissions.
 
-## 17. Internationalisation (i18n)
+## 18. Internationalisation (i18n)
 
 If the product ships to more than one market, **every user-facing string comes from a translation file**, looked up by key. A literal string in JSX is a review comment.
 
 > **Java analogy.** `ResourceBundle` with `messages_en.properties`, `messages_de.properties`. Same model: a key, a per-locale file, and a lookup at render time.
 
-**`src/components/17-i18n/I18nDemo.tsx`**
+**`src/components/18-i18n/I18nDemo.tsx`**
 
 ```tsx
 const { t, i18n } = useTranslation();
@@ -1563,12 +1597,12 @@ Three rules that cover almost everything you will need:
 
 - One file per language (`en.json`, `de.json`, …), often dozens of them, usually written by translators and synced by tooling — **you add keys to the source language only**.
 - A `fallbackLng`, so a key missing in one language renders the fallback rather than the raw key. Switch the demo to Português and watch the dropdown label fall back to English.
-- A provider at the app root (`<I18nextProvider>`), the same shape as every other provider in chapter 5.
+- A provider at the app root (`<I18nextProvider>`), the same shape as every other provider in chapter 6.
 - A check in CI that fails when a key is used but missing, or defined but unused.
 
 The practical consequence for your first ticket: when you add a label, you add a key to the translation file and reference it. Two files, not one — and reviewers will notice if you skip the second.
 
-## 18. Testing
+## 19. Testing
 
 ### The stack
 
@@ -1615,7 +1649,7 @@ expect(await screen.findByText('Ada')).toBeInTheDocument(); // after a fetch
 
 ### A plain component test
 
-**`src/components/03-useState/Counter.test.tsx`**
+**`src/components/04-useState/Counter.test.tsx`**
 
 ```tsx
 import { render, screen, fireEvent } from '@testing-library/react';
@@ -1641,7 +1675,7 @@ Prefer **`userEvent`** over `fireEvent` for anything a human does. `fireEvent.cl
 
 ### Testing a hook on its own
 
-**`src/components/12-custom-hooks/useDebouncedValue.test.ts`**
+**`src/components/13-custom-hooks/useDebouncedValue.test.ts`**
 
 ```tsx
 import { act, renderHook } from '@testing-library/react';
@@ -1885,7 +1919,7 @@ Three conventions that matter more than the API:
 
 Practically: `yarn cy:open` for the interactive runner while writing a spec, and CI runs the headless equivalent. If a Cypress test fails and a hundred Jest tests pass, suspect wiring — routing, providers, a real request nobody stubbed — rather than component logic.
 
-## 19. Browser tooling
+## 20. Browser tooling
 
 Two extensions carry most of the debugging weight.
 
@@ -1898,7 +1932,7 @@ Two extensions carry most of the debugging weight.
 
 Also worth knowing in plain DevTools: the **Network** tab (filter by Fetch/XHR, then check the request payload and response), and the **Console** — React's warnings there are unusually good. "Each child in a list should have a unique key" and "cannot update a component while rendering a different component" are pointing at real bugs, not noise.
 
-## 20. AI-assisted development
+## 21. AI-assisted development
 
 Two MCP servers are worth setting up on day one. Both plug your AI coding assistant into something it otherwise cannot see: your designs, and your running browser.
 
@@ -1970,14 +2004,14 @@ You are in the situation where AI help is most valuable and most dangerous: it i
 
   On a recent codebase the drift runs the other way — it will reach for MUI and inline `rules` when the repo uses an in-house design system and Zod schemas. Either way: **name the libraries, or point at a neighbouring file and say "match this."**
 
-- **Warn it about local wrappers.** The failure mode from chapter 21: an assistant imports `useForm` straight from the library, because that is what the library's docs say, and silently drops whatever your in-house wrapper added. If your repo wraps something, say so up front.
+- **Warn it about local wrappers.** The failure mode from chapter 22: an assistant imports `useForm` straight from the library, because that is what the library's docs say, and silently drops whatever your in-house wrapper added. If your repo wraps something, say so up front.
 - **Give it the conventions in writing.** A project instructions file (`CLAUDE.md`, `AGENTS.md`, or equivalent) describing the folder layout, the styling approach and the testing patterns turns generic React into code that matches your repo. Doing this once pays back constantly — and if your repo already has one, read it yourself: it is usually the best short description of the codebase that exists.
 - **Make the tools the referee, not yourself.** `yarn lint`, `yarn build` (type check) and `yarn test` are exactly the safety net you need while your own review instincts are still forming. Run them on every AI-authored change before you read the diff closely.
 - **Ask for the test first, then verify it fails for the right reason.** A generated test that passes against broken code is worse than no test.
 - **Watch for confident invention.** Props that do not exist, hooks from the wrong library version, and MUI components with plausible-but-wrong names are the standard failure modes. The type checker catches most of them, which is another argument for never using `any`.
 - **Review the diff, not the explanation.** The summary is usually right about intent and occasionally wrong about what the code does.
 
-## 21. What differs in a real production codebase
+## 22. What differs in a real production codebase
 
 This app is deliberately clean and deliberately current. Real codebases are neither, in two different directions: an **established** one carries years of accumulated decisions, and a **recent** one is built on libraries this workshop only mentions. None of it changes the concepts — but recognising it saves you an hour of confusion each time.
 
@@ -1987,21 +2021,21 @@ These are the ones that will make copied code fail to compile. Each has a mappin
 
 | Job                  | This app                                    | An established codebase                | Mapping table |
 | -------------------- | ------------------------------------------- | -------------------------------------- | ------------- |
-| Routing              | React Router v6 (`<Routes>`, `useNavigate`) | v5 (`<Switch>`, `useHistory`, `exact`) | chapter 15    |
-| Data fetching        | `@tanstack/react-query` v5 (object syntax)  | `react-query` v3 (positional args)     | chapter 9     |
-| HTTP faking in tests | MSW v1 (`rest`, `res(ctx.json())`)          | MSW v1, or an injected client          | chapter 18    |
+| Routing              | React Router v6 (`<Routes>`, `useNavigate`) | v5 (`<Switch>`, `useHistory`, `exact`) | chapter 16    |
+| Data fetching        | `@tanstack/react-query` v5 (object syntax)  | `react-query` v3 (positional args)     | chapter 10    |
+| HTTP faking in tests | MSW v1 (`rest`, `res(ctx.json())`)          | MSW v1, or an injected client          | chapter 19    |
 
 And in the other direction, things a **recent** codebase may use that this app does not:
 
 | Job             | You may find                                     | What it replaces                                                                                                                                 |
 | --------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| UI components   | An in-house design system                        | MUI imports — same ideas, different names (chapter 14)                                                                                           |
-| Form validation | A schema library (Zod) via `@hookform/resolvers` | Inline `rules` per field (chapter 10). The schema is the single source of truth for shape _and_ validation, closest to Bean Validation on a DTO  |
+| UI components   | An in-house design system                        | MUI imports — same ideas, different names (chapter 15)                                                                                           |
+| Form validation | A schema library (Zod) via `@hookform/resolvers` | Inline `rules` per field (chapter 11). The schema is the single source of truth for shape _and_ validation, closest to Bean Validation on a DTO  |
 | Query errors    | One global handler on the `QueryClient`          | Per-hook `onError` — required in v5, which removed query-level callbacks                                                                         |
-| HTTP            | An injected SDK/client object                    | Direct `axios` calls (chapter 18, option 3)                                                                                                      |
+| HTTP            | An injected SDK/client object                    | Direct `axios` calls (chapter 19, option 3)                                                                                                      |
 | Test transform  | `@swc/jest`                                      | `ts-jest`. **`@swc/jest` strips types without checking them** — a type error will not fail your tests, only the separate typecheck step. Run it. |
-| E2E             | Cypress                                          | nothing (chapter 18)                                                                                                                             |
-| Client state    | Zustand or another store                         | Context (chapter 16)                                                                                                                             |
+| E2E             | Cypress                                          | nothing (chapter 19)                                                                                                                             |
+| Client state    | Zustand or another store                         | Context (chapter 17)                                                                                                                             |
 | Observability   | Error/tracing SDKs wrapping the app root         | nothing                                                                                                                                          |
 | Permissions     | A rules library gating routes and buttons        | nothing — expect a `ProtectedRoute`-style wrapper                                                                                                |
 
@@ -2013,7 +2047,7 @@ And in the other direction, things a **recent** codebase may use that this app d
 | **Path aliases** (`import X from '@src/x'`)                  | relative paths                 | Configured in `tsconfig` **and** duplicated in the Jest config. If an import resolves in the editor but not in tests, that mapping is the culprit. |
 | **A query-key factory module**                               | inline `['users', id]`         | One place that builds every cache key. Use it — do not hand-write keys.                                                                            |
 | **Feature flags**                                            | unconditional code             | Screens gated per environment or per market. A missing screen is a flag before it is a bug.                                                        |
-| **i18n** (`useTranslation`, `t('key')`)                      | literal strings                | Chapter 17.                                                                                                                                        |
+| **i18n** (`useTranslation`, `t('key')`)                      | literal strings                | Chapter 18.                                                                                                                                        |
 | **A vertical slice per feature**                             | one folder per layer           | `api` + `types` + query hooks + a listing page + a form + tests, all together. Learn one slice and you can read them all.                          |
 | **Providers / contexts for cross-cutting state**             | inline `createContext`         | Current user, market/locale, error handling, permissions.                                                                                          |
 | **Data grids and virtualised lists**                         | a plain `<table>`              | Large APIs for sorting, filtering, inline editing.                                                                                                 |
@@ -2033,7 +2067,7 @@ Importing "the normal way" then **silently loses that behaviour** — no error, 
 1. **Read the props interface and the hook calls at the top.** That tells you the inputs and where data comes from before you read any JSX.
 2. **Find the pure logic.** Files like `helpers.ts`, `mappers.ts` or `*Utils.ts` are plain functions with no React in them — the easiest place to start contributing, and the easiest to test.
 
-## 22. Wrap-up
+## 23. Wrap-up
 
 ### Key takeaways
 
@@ -2128,7 +2162,7 @@ src/
 ├── App.tsx                      Route table.
 ├── components/
 │   ├── Layout/                  App bar + sidebar + <Outlet />
-│   ├── 01-JSX/ … 17-i18n/       One folder per chapter
+│   ├── 02-JSX/ … 18-i18n/       One folder per chapter
 │   └── */*.test.tsx             Tests live next to what they test
 ├── pages/                       One page per sidebar entry
 └── test/

@@ -20,7 +20,7 @@ describe('RoutingPage', () => {
     renderWithChild();
 
     expect(
-      screen.getByRole('heading', { level: 1, name: /15. Routing/i }),
+      screen.getByRole('heading', { level: 1, name: /16. Routing/i }),
     ).toBeInTheDocument();
     expect(
       screen.getByRole('link', { name: /Order list/i }),

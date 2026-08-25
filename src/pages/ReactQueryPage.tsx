@@ -1,12 +1,12 @@
 import { Typography, Divider, Box } from '@mui/material';
-// import UserListWithReactQuery from '../components/09-react-query/UserListWithReactQueryInitial';
-import UserListWithReactQuery from '../components/09-react-query/UserListWithReactQuery';
+// import UserListWithReactQuery from '../components/10-react-query/UserListWithReactQueryInitial';
+import UserListWithReactQuery from '../components/10-react-query/UserListWithReactQuery';
 
 const ReactQueryPage = () => {
   return (
     <Box>
       <Typography variant="h4" component="h1" gutterBottom>
-        9. React Query for Data Fetching
+        10. React Query for Data Fetching
       </Typography>
       <Typography paragraph>
         React Query (`@tanstack/react-query`) treats server data as a cache

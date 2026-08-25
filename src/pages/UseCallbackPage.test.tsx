@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 
 import UseCallbackPage from './UseCallbackPage';
-import UseCallbackDemo from '../components/08-useCallback/UseCallbackDemoFixed'; // Note: UseCallbackDemoFixed is imported as UseCallbackDemo
+import UseCallbackDemo from '../components/09-useCallback/UseCallbackDemoFixed'; // Note: UseCallbackDemoFixed is imported as UseCallbackDemo
 
 // Mock the UseCallbackDemoFixed component
-jest.mock('../components/08-useCallback/UseCallbackDemoFixed', () => ({
+jest.mock('../components/09-useCallback/UseCallbackDemoFixed', () => ({
   __esModule: true,
   default: jest.fn(() => (
     <div data-testid="mock-usecallback-demo">
@@ -17,7 +17,7 @@ describe('UseCallbackPage', () => {
   it('renders the page title and description', () => {
     render(<UseCallbackPage />);
     expect(
-      screen.getByRole('heading', { level: 1, name: /8. useCallback Hook/i }),
+      screen.getByRole('heading', { level: 1, name: /9. useCallback Hook/i }),
     ).toBeInTheDocument();
     expect(
       screen.getByText(/`useCallback` memoizes a function definition./i),

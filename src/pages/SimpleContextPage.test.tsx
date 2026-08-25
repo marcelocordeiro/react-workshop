@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 
 import SimpleContextPage from './SimpleContextPage';
-import { SimpleContextExample } from '../components/05-useContext/SimpleContextExample';
+import { SimpleContextExample } from '../components/06-useContext/SimpleContextExample';
 
 // Mock the ContextExample component
-jest.mock('../components/05-useContext/SimpleContextExample', () => ({
+jest.mock('../components/06-useContext/SimpleContextExample', () => ({
   SimpleContextExample: jest.fn(() => (
     <div data-testid="mock-context-example">Mock Simple Context Example</div>
   )),
@@ -16,7 +16,7 @@ describe('SimpleContextPage', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /5.1 Simple useContext Example/i,
+        name: /6.1 Simple useContext Example/i,
       }),
     ).toBeInTheDocument();
     expect(

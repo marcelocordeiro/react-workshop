@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { CssBaseline } from '@mui/material';
-import { ThemeProvider } from './components/05-useContext/ThemeProvider';
+import { ThemeProvider } from './components/06-useContext/ThemeProvider';
 import App from './App';
 import './index.css';
 

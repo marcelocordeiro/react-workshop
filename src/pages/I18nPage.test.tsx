@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import I18nPage from './I18nPage';
-import I18nDemo from '../components/17-i18n/I18nDemo';
+import I18nDemo from '../components/18-i18n/I18nDemo';
 
-jest.mock('../components/17-i18n/I18nDemo', () => ({
+jest.mock('../components/18-i18n/I18nDemo', () => ({
   __esModule: true,
   default: jest.fn(() => <div data-testid="mock-i18n-demo" />),
 }));
@@ -14,7 +14,7 @@ describe('I18nPage', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /17. Internationalisation/i,
+        name: /18. Internationalisation/i,
       }),
     ).toBeInTheDocument();
     expect(screen.getByTestId('mock-i18n-demo')).toBeInTheDocument();
