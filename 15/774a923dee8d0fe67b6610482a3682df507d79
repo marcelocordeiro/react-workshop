@@ -1,0 +1,44 @@
+src/components/13-custom-hooks/useToggle.ts
+  h_52188101c1cb63 14
+src/components/07-useReducer/TodoBase.tsx
+  h_52188101c1cb63 16,23,26-29,42,54,62
+src/components/14-mutations/AddUser.tsx
+  h_52188101c1cb63 47,112
+src/components/09-useCallback/UseCallbackDemoFixed.tsx
+  h_52188101c1cb63 24
+src/pages/UseCallbackPage.tsx
+  h_52188101c1cb63 3
+src/components/06-useContext/SimpleContextExample.tsx
+  h_52188101c1cb63 4-5,7-20,22-30,32-43
+src/components/05-useEffect/UserList.tsx
+  h_52188101c1cb63 17-67
+src/components/07-useReducer/TodoWithState.tsx
+  h_52188101c1cb63 16,23,33-42,67,77
+src/components/10-react-query/UserListWithReactQuery.tsx
+  h_52188101c1cb63 29,37
+src/components/07-useReducer/Todo.tsx
+  h_52188101c1cb63 16,27,58-63,88,98
+src/pages/UseCallbackPage.test.tsx
+  s_b7ea4f91d77301::t_57473423c32c39 4,6-7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.15",
+  "base_commit_sha": "15774a923dee8d0fe67b6610482a3682df507d79",
+  "prompts": {},
+  "humans": {
+    "h_52188101c1cb63": {
+      "author": "Marcelo Cordeiro <marcelo.cordeiro@deliveryhero.com>"
+    }
+  },
+  "sessions": {
+    "s_b7ea4f91d77301": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "0cc15ffb-cbe4-4233-af4a-6a11645157f9",
+        "model": "gemini-3.5-flash"
+      },
+      "human_author": "Marcelo Cordeiro <marcelo.cordeiro@deliveryhero.com>"
+    }
+  }
+}
