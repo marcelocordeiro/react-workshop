@@ -1,6 +1,6 @@
 import { Typography, Divider, Box } from '@mui/material';
-// import UseCallbackDemo from '../components/09-useCallback/UseCallbackDemo';
-import UseCallbackDemo from '../components/09-useCallback/UseCallbackDemoFixed';
+import UseCallbackDemo from '../components/09-useCallback/UseCallbackDemo';
+// import UseCallbackDemo from '../components/09-useCallback/UseCallbackDemoFixed';
 
 const UseCallbackPage = () => {
   return (

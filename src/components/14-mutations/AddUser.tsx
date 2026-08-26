@@ -44,7 +44,7 @@ const AddUser = () => {
   // cache explicitly which data is now stale.
   const queryClient = useQueryClient();
 
-  const { data: users, isPending } = useQuery<User[], Error>({
+  const { data: users, isLoading } = useQuery<User[], Error>({
     queryKey: ['users'],
     queryFn: fetchUsers,
   });
@@ -109,7 +109,7 @@ const AddUser = () => {
         </Alert>
       )}
 
-      {isPending ? (
+      {isLoading ? (
         <CircularProgress />
       ) : (
         <List dense>

@@ -21,6 +21,7 @@ const shuffle = (array: string[]) =>
 
 const UseCallbackDemo = () => {
   const [users, setUsers] = useState(allUsers);
+  console.log('users', users);
 
   const handleSearch = useCallback((text: string) => {
     const filteredUsers = allUsers.filter((user) =>

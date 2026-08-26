@@ -10,8 +10,6 @@ export const useToggle = (initialValue = false) => {
   const [value, setValue] = useState(initialValue);
 
   const toggle = useCallback(() => setValue((previous) => !previous), []);
-  const setOn = useCallback(() => setValue(true), []);
-  const setOff = useCallback(() => setValue(false), []);
 
-  return [value, toggle, { setOn, setOff }] as const;
+  return [value, toggle] as const;
 };

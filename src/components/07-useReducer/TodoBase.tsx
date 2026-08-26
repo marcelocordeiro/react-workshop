@@ -13,15 +13,19 @@ import {
 } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 
-interface Todo {
+interface TodoI {
   id: number;
   text: string;
   completed: boolean;
 }
 
 const Todo = () => {
-  const [todos] = useState<Todo[]>([]);
+  const [todos] = useState<TodoI[]>([]);
   const [text, setText] = useState('');
+
+  const handleAddTodo = () => {};
+  const handleDeleteTodo = () => {};
+  const handleCheckTodo = () => {};
 
   return (
     <Box>
@@ -35,20 +39,28 @@ const Todo = () => {
           onChange={(e) => setText(e.target.value)}
           fullWidth
         />
-        <Button variant="contained">Add</Button>
+        <Button variant="contained" onClick={handleAddTodo}>
+          Add
+        </Button>
       </Box>
       <List>
         {todos.map((todo) => (
           <ListItem
             key={todo.id}
             secondaryAction={
-              <IconButton edge="end" aria-label="delete">
+              <IconButton
+                edge="end"
+                aria-label="delete"
+                onClick={handleDeleteTodo}
+              >
                 <Delete />
               </IconButton>
             }
           >
             <FormControlLabel
-              control={<Checkbox checked={todo.completed} />}
+              control={
+                <Checkbox checked={todo.completed} onChange={handleCheckTodo} />
+              }
               label={
                 <ListItemText
                   primary={

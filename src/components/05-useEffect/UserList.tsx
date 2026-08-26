@@ -14,6 +14,57 @@ interface User {
   email: string;
 }
 
+// const UserList = () => {
+//   const users = axios.get<User[]>('https://jsonplaceholder.typicode.com/users');
+
+//   return (
+//     <List>
+//       {users.map((user) => (
+//         <ListItem key={user.id}>
+//           <ListItemText primary={user.name} secondary={user.email} />
+//         </ListItem>
+//       ))}
+//     </List>
+//   );
+// };
+
+// const UserList = () => {
+//   const [users, setUsers] = useState<User[]>([]);
+//   axios
+//     .get<User[]>('https://jsonplaceholder.typicode.com/users')
+//     .then((response) => setUsers(response.data));
+
+//   return (
+//     <List>
+//       {users.map((user) => (
+//         <ListItem key={user.id}>
+//           <ListItemText primary={user.name} secondary={user.email} />
+//         </ListItem>
+//       ))}
+//     </List>
+//   );
+// };
+
+// const UserList = () => {
+//   const [users, setUsers] = useState<User[]>([]);
+
+//   useEffect(() => {
+//     axios
+//       .get<User[]>('https://jsonplaceholder.typicode.com/users')
+//       .then((response) => setUsers(response.data));
+//   }, []);
+
+//   return (
+//     <List>
+//       {users.map((user) => (
+//         <ListItem key={user.id}>
+//           <ListItemText primary={user.name} secondary={user.email} />
+//         </ListItem>
+//       ))}
+//     </List>
+//   );
+// };
+
 const UserList = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);

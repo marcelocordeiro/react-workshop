@@ -13,14 +13,14 @@ import {
 } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 
-interface Todo {
+interface TodoI {
   id: number;
   text: string;
   completed: boolean;
 }
 
 const Todo = () => {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [todos, setTodos] = useState<TodoI[]>([]);
   const [text, setText] = useState('');
 
   const handleAddTodo = () => {
@@ -29,6 +29,16 @@ const Todo = () => {
       setText('');
     }
   };
+
+  const handleDeleteTodo = (todo: TodoI) =>
+    setTodos(todos.filter((t) => t.id !== todo.id));
+
+  const handleCheckTodo = (todo: TodoI) =>
+    setTodos(
+      todos.map((t) =>
+        t.id === todo.id ? { ...t, completed: !t.completed } : t,
+      ),
+    );
 
   return (
     <Box>
@@ -54,9 +64,7 @@ const Todo = () => {
               <IconButton
                 edge="end"
                 aria-label="delete"
-                onClick={() => {
-                  setTodos(todos.filter((t) => t.id !== todo.id));
-                }}
+                onClick={() => handleDeleteTodo(todo)}
               >
                 <Delete />
               </IconButton>
@@ -66,15 +74,7 @@ const Todo = () => {
               control={
                 <Checkbox
                   checked={todo.completed}
-                  onChange={() => {
-                    setTodos(
-                      todos.map((t) =>
-                        t.id === todo.id
-                          ? { ...t, completed: !t.completed }
-                          : t,
-                      ),
-                    );
-                  }}
+                  onChange={() => handleCheckTodo(todo)}
                 />
               }
               label={

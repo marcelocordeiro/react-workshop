@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 
-interface Todo {
+interface TodoI {
   id: number;
   text: string;
   completed: boolean;
@@ -24,7 +24,7 @@ type Action =
   | { type: 'TOGGLE_TODO'; payload: number }
   | { type: 'REMOVE_TODO'; payload: number };
 
-const reducer = (state: Todo[], action: Action): Todo[] => {
+const reducer = (state: TodoI[], action: Action): TodoI[] => {
   switch (action.type) {
     case 'ADD_TODO':
       return [
@@ -55,6 +55,12 @@ const Todo = () => {
     }
   };
 
+  const handleDeleteTodo = (todo: TodoI) =>
+    dispatch({ type: 'REMOVE_TODO', payload: todo.id });
+
+  const handleCheckTodo = (todo: TodoI) =>
+    dispatch({ type: 'TOGGLE_TODO', payload: todo.id });
+
   return (
     <Box>
       <Typography variant="h6">My Todo List</Typography>
@@ -79,9 +85,7 @@ const Todo = () => {
               <IconButton
                 edge="end"
                 aria-label="delete"
-                onClick={() =>
-                  dispatch({ type: 'REMOVE_TODO', payload: todo.id })
-                }
+                onClick={() => handleDeleteTodo(todo)}
               >
                 <Delete />
               </IconButton>
@@ -91,9 +95,7 @@ const Todo = () => {
               control={
                 <Checkbox
                   checked={todo.completed}
-                  onChange={() =>
-                    dispatch({ type: 'TOGGLE_TODO', payload: todo.id })
-                  }
+                  onChange={() => handleCheckTodo(todo)}
                 />
               }
               label={

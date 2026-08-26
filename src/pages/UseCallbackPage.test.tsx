@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 
 import UseCallbackPage from './UseCallbackPage';
-import UseCallbackDemo from '../components/09-useCallback/UseCallbackDemoFixed'; // Note: UseCallbackDemoFixed is imported as UseCallbackDemo
+import UseCallbackDemo from '../components/09-useCallback/UseCallbackDemo';
 
-// Mock the UseCallbackDemoFixed component
-jest.mock('../components/09-useCallback/UseCallbackDemoFixed', () => ({
+// Mock the UseCallbackDemo component
+jest.mock('../components/09-useCallback/UseCallbackDemo', () => ({
   __esModule: true,
   default: jest.fn(() => (
     <div data-testid="mock-usecallback-demo">

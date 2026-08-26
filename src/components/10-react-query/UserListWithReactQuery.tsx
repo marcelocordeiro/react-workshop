@@ -26,7 +26,7 @@ const UserList = () => {
   // policy (staleTime, retry, enabled, ...) all in one place.
   const {
     data: users,
-    isPending,
+    isLoading,
     isError,
     error,
   } = useQuery<User[], Error>({
@@ -34,9 +34,7 @@ const UserList = () => {
     queryFn: fetchUsers,
   });
 
-  // `isPending` means "no data yet". Use `isFetching` for "a request is in
-  // flight but I may already have cached data on screen".
-  if (isPending) {
+  if (isLoading) {
     return <CircularProgress />;
   }
 
